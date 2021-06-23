@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">TestApplication</string>
+    <string name="physical">物理構成図</string>
+    <string name="logical">論理構成図</string>
+    <string name="routing">ルーティング</string>
+    <string name="acl">ACL</string>
+    <string name="memo">メモ</string>
+    <string name="router_line1">特権EXECモードのパスワード：</string>
+    <string name="router_line2">hostname</string>
+    <string name="router_line3">ip domain-lookup</string>
+    <string name="router_line4">banner motd #</string>
+    <string name="router_line5">service password-encryption</string>
+    <string name="router_line6">ip domain-name</string>
+    <string name="router_line7">enable secret</string>
+    <string name="router_line8">line console 0</string>
+    <string name="router_line9">password</string>
+    <string name="router_line10">logging synchronous</string>
+    <string name="router_line13">IPv6 address :</string>
+    <string name="router_line14">prefix :</string>
+    <string name="enable">enable</string>
+    <string name="disable">disable</string>
+    <string name="switch_line1">VLAN :</string>
+    <string name="switch_line2">VLAN番号 :</string>
+    <string name="switch_line3">VLAN名前 :</string>
+    <string name="ipaddress">IP address :</string>
+    <string name="subnet">subnet mask :</string>
+    <string name="shutdown">shutdown</string>
+    <string name="access">access</string>
+    <string name="trunk">trunk</string>
+    <string name="vlan_add">VLAN追加</string>
+    <string name="remove">削除</string>
+    <string name="ok">OK</string>
+
+    <string-array name="interface_name">
+        <item>gigabitethernet</item>
+        <item>fastethernet</item>
+        <item>serial</item>
+    </string-array>
+
+    <string-array name="port_name">
+        <item>0/0/0</item>
+        <item>0/0/1</item>
+        <item>0/1/0</item>
+        <item>0/1/1</item>
+        <item>1/0/0</item>
+        <item>1/0/1</item>
+        <item>1/1/0</item>
+        <item>1/1/1</item>
+        <item>0/0</item>
+        <item>0/1</item>
+        <item>1/0</item>
+        <item>1/1</item>
+    </string-array>
+
+
+</resources>

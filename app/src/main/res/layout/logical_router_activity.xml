@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="LogicalRouterActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remove"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onOKButtonClick"
+                android:text="@string/ok"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line1"/>
+
+            <EditText
+                android:id="@+id/execTextPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line2"/>
+
+            <EditText
+                android:id="@+id/hostname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/router_line3"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable"/>
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line4"/>
+
+            <EditText
+                android:id="@+id/banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/router_line5"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable"/>
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line6"/>
+
+            <EditText
+                android:id="@+id/domain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line7"/>
+
+            <EditText
+                android:id="@+id/enable_secret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/router_line8"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line9"/>
+
+            <EditText
+                android:id="@+id/console_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/router_line10" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable" />
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/interface_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/interface_name"/>
+
+            <Spinner
+                android:id="@+id/port_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/port_name"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ipaddress"/>
+
+            <EditText
+                android:id="@+id/ipaddress1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ipaddress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ipaddress3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ipaddress4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subnet"/>
+
+            <EditText
+                android:id="@+id/subnet1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/subnet2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/subnet3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/subnet4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line13"/>
+
+            <EditText
+                android:id="@+id/ipv6address1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/ipv6address5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv6address8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line14"/>
+
+            <EditText
+                android:id="@+id/prefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/shutdown"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable" />
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!--そのばしのぎでこっから下は消す！-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/interface_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/interface_name"/>
+
+            <Spinner
+                android:id="@+id/port_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/port_name"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ipaddress"/>
+
+            <EditText
+                android:id="@+id/ip1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ip2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/ip4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subnet"/>
+
+            <EditText
+                android:id="@+id/sub1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/sub2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/sub3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."/>
+
+            <EditText
+                android:id="@+id/sub4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line13"/>
+
+            <EditText
+                android:id="@+id/ipv61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv62"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv63"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv64"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <EditText
+                android:id="@+id/ipv65"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv66"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv67"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"/>
+
+            <EditText
+                android:id="@+id/ipv68"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/router_line14"/>
+
+            <EditText
+                android:id="@+id/prefix2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/shutdown"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable" />
+
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+</ScrollView>
