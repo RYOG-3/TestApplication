@@ -1,8 +1,12 @@
 package com.example.testapplication;
 
+import android.widget.TextView;
+
 public interface Device {
 
     void setID(int ID);
+
+    void setHostname(TextView hostname);
 
     int getCenterX();
 
@@ -11,4 +15,6 @@ public interface Device {
     boolean getIsSet();
 
     int getID();
+
+    TextView getHostname();
 }

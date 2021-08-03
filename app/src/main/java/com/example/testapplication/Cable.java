@@ -34,6 +34,8 @@ public class Cable extends View {
         canvas.drawLines(pts, paint);
     }
 
+
+
     protected int getCable_ID() {
         return cable_ID;
     }
@@ -45,17 +47,11 @@ public class Cable extends View {
     protected boolean disconnected(int start_X, int start_Y, int end_X, int end_Y) {
         boolean judge = false;
 
-        double ta = (start_X - end_X) * (y1 - start_Y) + (start_Y - end_Y) * (start_X - x1); // 何も考えずにintにしてたからちゃんと計算できなかったけどdoubleにしたらいけた！ 型って大事！
+        double ta = (start_X - end_X) * (y1 - start_Y) + (start_Y - end_Y) * (start_X - x1); // 何も考えずにintにしてたからオーバーフローになっていたけど、doubleにしたらいけた！ 型って大事！
         double tb = (start_X - end_X) * (y2 - start_Y) + (start_Y - end_Y) * (start_X - x2);
         double tc = (x1 - x2) * (start_Y - y1) + (y1 - y2) * (x1 - start_X);
         double td = (x1 - x2) * (end_Y - y1) + (y1 - y2) * (x1 - end_X);
 
-        /**
-        int ta = (start_X - end_X) * (start_Y - y1) + (end_Y - start_Y) * (start_X - x1);
-        int tb = (start_X - end_X) * (start_Y - y2) + (end_Y - start_Y) * (start_X - x2);
-        int tc = (x1 - x2) * (y1 - start_Y) + (y2 - y1) * (x1 - start_X);
-        int td = (x1 - x2) * (y1 - end_Y) + (y2 - y1) * (x1 - end_X);
-         */
 
         System.out.printf("%d, %d, %d, %d, %d, %d, %d, %d\n", start_X, start_Y, end_X, end_Y, x1, y1, x2, y2);
         System.out.println(ta*tb);
@@ -68,6 +64,8 @@ public class Cable extends View {
         return judge;
 
     }
+
+
 
 
 }

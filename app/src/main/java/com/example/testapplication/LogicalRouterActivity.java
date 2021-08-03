@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * ルータの論理構成図で詳細なパラメータを入力するクラス
+ */
 public class LogicalRouterActivity extends AppCompatActivity {
 
     @Override
@@ -16,6 +19,7 @@ public class LogicalRouterActivity extends AppCompatActivity {
 
     }
 
+    // OKボタンをクリックするとアクティビティが終了する
     public void onOKButtonClick(View view) {
         finish();
     }

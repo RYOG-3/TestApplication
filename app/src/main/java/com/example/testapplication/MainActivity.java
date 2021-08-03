@@ -6,6 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Context;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -163,6 +166,21 @@ public class MainActivity extends AppCompatActivity {
                             layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID; // 上側
 
                             router.setLayoutParams(layoutParams); // 作成したパラメーターを設定する
+
+                            /**
+                             * ラベルの設定
+                             */
+                            TextView hostname = router.getHostname();
+                            hostname.setElevation(2);
+                            layout.addView(hostname);
+                            layoutParams = (ConstraintLayout.LayoutParams)hostname.getLayoutParams();
+                            mlp = (ViewGroup.MarginLayoutParams)layoutParams;
+                            mlp.leftMargin = new_X-width/2 + 50; // 左のマージンを設定する
+                            mlp.topMargin = 0; // 上のマージンを設定する
+                            layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+                            layoutParams.topToBottom = router.getId();
+                            hostname.setLayoutParams(layoutParams);
+                            router.setHostname(hostname); // これで擬似的にViewの親子関係が成り立つ(ほんとはGroupViewを作るべきやったかもしれない...)
                         }
                         break;
                     default:
@@ -173,6 +191,27 @@ public class MainActivity extends AppCompatActivity {
                 // 多分使わない
                 break;
             case Routing:
+                /**
+                RoutingCircle routingCircle = new RoutingCircle(this);
+                Path path = routingCircle.getPath();
+
+                float x = event.getX();
+                float y = event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        path.moveTo(x, y);
+                        routingCircle.invalidate();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        path.lineTo(x, y);
+                        routingCircle.invalidate();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        path.lineTo(x, y);
+                        routingCircle.invalidate();
+                        break;
+                 */
                 break;
             case ACL:
                 break;
@@ -292,11 +331,18 @@ public class MainActivity extends AppCompatActivity {
                             s.setLayoutParams(router.getLayoutParams());
                             switches.add(s);
                             s.setElevation(2);
+                            TextView hostname = s.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)router.getHostname().getLayoutParams();
+                            l.topToBottom = s.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
                             routers.remove(((Router) v).getID());
                             s.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(router.getHostname()); // 前のラベルを削除
                             routerNum--;
                             layout.addView(s);
+                            layout.addView(hostname);
                             System.out.println("スイッチに変更");
                         } else if (v.getClass() == Switch.class) {
                             Switch s = (Switch) v;
@@ -304,11 +350,24 @@ public class MainActivity extends AppCompatActivity {
                             host.setLayoutParams(s.getLayoutParams());
                             hosts.add(host);
                             host.setElevation(2);
+                            TextView hostname = host.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)s.getHostname().getLayoutParams();
+                            l.topToBottom = host.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
                             switches.remove(((Switch) v).getID());
                             switchNum--;
                             host.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(s.getHostname()); // 前のラベルを削除
                             layout.addView(host);
+                            layout.addView(hostname);
+                            if (host.getID() == 0) {
+                                layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 1));
+                            } else {
+                                layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 10));
+                            }
+
                             System.out.println("ホストに変更");
                         } else {
                             Host host = (Host) v;
@@ -316,11 +375,18 @@ public class MainActivity extends AppCompatActivity {
                             router.setLayoutParams(host.getLayoutParams());
                             routers.add(router);
                             router.setElevation(2);
+                            TextView hostname = router.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)host.getHostname().getLayoutParams();
+                            l.topToBottom = router.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
                             hosts.remove(((Host) v).getID());
                             hostNum--;
                             router.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(router.getHostname()); // 前のラベルを削除
                             layout.addView(router);
+                            layout.addView(hostname);
                             System.out.println("ルータに変更");
                         }
 
