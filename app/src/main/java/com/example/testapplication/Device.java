@@ -8,9 +8,9 @@ public interface Device {
 
     void setHostname(TextView hostname);
 
-    int getCenterX();
+    float getCenterX();
 
-    int getCenterY();
+    float getCenterY();
 
     boolean getIsSet();
 

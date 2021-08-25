@@ -8,13 +8,13 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class Switch extends AppCompatImageView implements Device {
-    private int x, y; // 画像の中心座標
+    private float x, y; // 画像の中心座標
     private int switch_ID; // ルータの番号
     private boolean isSet = false; // 設定済かどうか
     private int[] vlan; // 設定しているVLANの番号
     private TextView hostname;
 
-    public Switch(Context context, int x, int y, int switch_ID) {
+    public Switch(Context context, float x, float y, int switch_ID) {
         super(context);
         this.x = x;
         this.y = y;
@@ -34,11 +34,11 @@ public class Switch extends AppCompatImageView implements Device {
         this.hostname = hostname;
     }
 
-    public int getCenterX() {
+    public float getCenterX() {
         return x;
     }
 
-    public int getCenterY() {
+    public float getCenterY() {
         return y;
     }
 

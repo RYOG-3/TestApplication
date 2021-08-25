@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
     private int cableNum = 0; // 結線したケーブルの数
-    private int start_X, start_Y; // ケーブルの削除をする時に使用する
+    private float start_X, start_Y; // ケーブルの削除をする時に使用する
     private ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち
     private ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち
     private ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち
@@ -119,30 +119,41 @@ public class MainActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     // 単純にタッチされた
                     case MotionEvent.ACTION_DOWN: // タッチし始めた時
-                        start_X = (int)event.getRawX();
-                        start_Y = (int)event.getRawY();
+                        start_X = event.getRawX();
+                        start_Y = event.getRawY();
                         break;
                     case MotionEvent.ACTION_MOVE: // ドラッグした時
                         // 何もしない
                         break;
                     case MotionEvent.ACTION_UP: // タッチを終了した時
                         boolean judge = false; // ネットワークの配置なのかケーブルの削除なのかを判断する
-                        int end_X = (int)event.getRawX();
-                        int end_Y = (int)event.getRawY();
+                        float end_X = event.getRawX();
+                        float end_Y = event.getRawY();
+
                         for (Cable cable: cables) {
-                            System.out.println("Test");
-                            if (cable.disconnected(start_X, start_Y, end_X, end_Y)) {
+                            if (cable.onTouch(start_X, start_Y)) {
+                                System.out.println("ケーブルをタッチしました");
                                 judge = true;
-                                cables.remove(cable.getCable_ID());
-                                --cableNum;
-                                layout.removeView(cable); // ケーブルを削除する
-                                System.out.println("ケーブルを削除しました");
                             }
                         }
+
+                        if (judge == false){
+                            for (Cable cable: cables) {
+                                System.out.println("Test");
+                                if (cable.disconnected(start_X, start_Y, end_X, end_Y)) {
+                                    judge = true;
+                                    cables.remove(cable.getCable_ID());
+                                    --cableNum;
+                                    layout.removeView(cable); // ケーブルを削除する
+                                    System.out.println("ケーブルを削除しました");
+                                }
+                            }
+                        }
+
                         if (!judge) {
                             System.out.println("ルータを配置");
-                            int new_X = (int)event.getRawX();
-                            int new_Y = (int)event.getRawY();
+                            float new_X = (int)event.getRawX();
+                            float new_Y = (int)event.getRawY();
                             Router router = new Router(this, new_X, new_Y, routerNum++);
                             routers.add(router);
                             DeviceListener listener = new DeviceListener();
@@ -153,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
                             router.setLayoutParams(new ConstraintLayout.LayoutParams(width, height)); // パラメータで画像の幅と高さの設定
                             ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams)router.getLayoutParams();
                             ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)layoutParams;
-                            mlp.leftMargin = new_X-width/2; // 左のマージンを設定する
-                            mlp.topMargin = new_Y-height/2; // 上のマージンを設定する
+                            mlp.leftMargin = (int)(new_X-width/2); // 左のマージンを設定する
+                            mlp.topMargin = (int)(new_Y-height/2); // 上のマージンを設定する
                             // mlp.setMargins(new_X, new_Y,new_X,new_Y); //上下左右のマージンを設定する
 
                             /**
@@ -175,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                             layout.addView(hostname);
                             layoutParams = (ConstraintLayout.LayoutParams)hostname.getLayoutParams();
                             mlp = (ViewGroup.MarginLayoutParams)layoutParams;
-                            mlp.leftMargin = new_X-width/2 + 50; // 左のマージンを設定する
+                            mlp.leftMargin = (int)(new_X-width/2 + 50); // 左のマージンを設定する
                             mlp.topMargin = 0; // 上のマージンを設定する
                             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
                             layoutParams.topToBottom = router.getId();

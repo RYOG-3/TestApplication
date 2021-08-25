@@ -11,19 +11,19 @@ import android.view.View;
  * VLANの範囲を可視化するクラス
  */
 public class VLAN extends View {
-    private int x, y; // 中心座標
+    private float x, y; // 中心座標
     private int left, top, right, bottom; // 四角形の左上と右下
     private int vlan_ID; // VLAN番号
 
-    public VLAN(Context context, int x, int y, int vlan_ID) {
+    public VLAN(Context context, float x, float y, int vlan_ID) {
         super(context);
         this.x = x;
         this.y = y;
 
-        this.left = x - 150;
-        this.top = y - 150;
-        this.right = x + 150;
-        this.bottom = y + 150;
+        this.left = (int)x - 150;
+        this.top = (int)y - 150;
+        this.right = (int)x + 150;
+        this.bottom = (int)y + 150;
 
         this.vlan_ID = vlan_ID;
     }

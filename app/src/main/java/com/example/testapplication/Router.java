@@ -13,12 +13,12 @@ import androidx.appcompat.widget.AppCompatImageView;
  */
 
 public class Router extends AppCompatImageView implements Device {
-    private int x, y; // 画像の中心座標
+    private float x, y; // 画像の中心座標
     private int router_ID; // ルータの番号
     private boolean isSet = false; // 設定済かどうか
     private TextView hostname;
 
-    public Router(Context context, int x, int y, int router_ID) {
+    public Router(Context context, float x, float y, int router_ID) {
         super(context);
         this.x = x;
         this.y = y;
@@ -38,11 +38,11 @@ public class Router extends AppCompatImageView implements Device {
         this.hostname = hostname;
     }
 
-    public int getCenterX() {
+    public float getCenterX() {
         return x;
     }
 
-    public int getCenterY() {
+    public float getCenterY() {
         return y;
     }
 
