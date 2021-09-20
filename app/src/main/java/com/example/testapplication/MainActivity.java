@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち
     private ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち
     private ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち
-    private Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
+    protected static Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
+    private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
+    private Memo memo; // メモ機能で使う描画用クラス
+    private final int RESULT_SUBACTIVITY = 1000;
 
     private Context context = this;
 
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        routingCircle = findViewById(R.id.routingCircle);
+        memo = findViewById(R.id.memo_class);
 
         /**
          * 物理構成図ボタンのリスナー設定
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Physical;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
                 System.out.println("物理構成モードに変更");
             }
         });
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Logical;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
                 System.out.println("論理構成モードに変更");
             }
         });
@@ -72,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Routing;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
                 System.out.println("ルーティングモードに変更");
             }
         });
@@ -84,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.ACL;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
                 System.out.println("ACLモードに変更");
             }
         });
@@ -96,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Memo;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
                 System.out.println("メモモードに変更");
             }
         });
@@ -414,6 +429,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // SubActivityの開始を決めるクラス
     private class SetInformationListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -438,6 +454,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return true;
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (resultCode == RESULT_OK && requestCode == RESULT_SUBACTIVITY && intent != null) {
+            // ここから遷移先からのデータを受け取る
         }
     }
 
