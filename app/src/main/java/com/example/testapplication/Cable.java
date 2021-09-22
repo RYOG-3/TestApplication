@@ -92,9 +92,21 @@ public class Cable extends View {
         return judge;
     }
 
+    /**
+     * ケーブルの始点の座標を返すメソッド
+     */
+    public float[] getStartPoint() {
+        float[] start = {x1, y1};
+        return start;
+    }
 
-
-
+    /**
+     * ケーブルの終点の座標を返すメソッド
+     */
+    public float[] getEndPoint() {
+        float[] end = {x2, y2};
+        return end;
+    }
 
 
 }

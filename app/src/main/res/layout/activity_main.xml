@@ -74,6 +74,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.example.testapplication.ACLArrow
+            android:id="@+id/aclArrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.example.testapplication.Memo
             android:id="@+id/memo_class"
             android:layout_width="match_parent"

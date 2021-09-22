@@ -28,8 +28,11 @@
     <string name="access">access</string>
     <string name="trunk">trunk</string>
     <string name="vlan_add">VLAN追加</string>
+    <string name="accessList">アクセスリストの番号 :</string>
     <string name="remove">削除</string>
     <string name="ok">OK</string>
+    <string name="plus">＋</string>
+    <string name="minus">ー</string>
 
     <string-array name="interface_name">
         <item>gigabitethernet</item>
@@ -50,6 +53,11 @@
         <item>0/1</item>
         <item>1/0</item>
         <item>1/1</item>
+    </string-array>
+
+    <string-array name="access_type">
+        <item>permit</item>
+        <item>deny</item>
     </string-array>
 
 

@@ -23,13 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
     private int cableNum = 0; // 結線したケーブルの数
     private float start_X, start_Y; // ケーブルの削除をする時に使用する
-    private ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち
-    private ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち
-    private ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち
-    private ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち
+    protected static ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち
+    protected static ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち
+    protected static ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち
+    protected static ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち
     protected static Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
     private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
     private Memo memo; // メモ機能で使う描画用クラス
+    private static MainActivity instance = null;
     private final int RESULT_SUBACTIVITY = 1000;
 
     private Context context = this;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        instance = this;
 
 
         routingCircle = findViewById(R.id.routingCircle);
@@ -457,12 +459,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    protected void startRoutingActivity() {
+        Intent intent;
+        intent = new Intent(MainActivity.this, RoutingActivity.class);
+        startActivity(intent);
+    }
+
+    protected void startACLActivity() {
+        Intent intent;
+        intent = new Intent(MainActivity.this, ACLActivity.class);
+        startActivity(intent);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
         if (resultCode == RESULT_OK && requestCode == RESULT_SUBACTIVITY && intent != null) {
             // ここから遷移先からのデータを受け取る
         }
+    }
+
+    public static MainActivity getInstance() {
+        return instance;
     }
 
 

@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * メモモードのクラス
  * メモをするために使いモードを切り替えると消える
+ * 削除機能も搭載
  */
 public class Memo extends View {
     // 履歴

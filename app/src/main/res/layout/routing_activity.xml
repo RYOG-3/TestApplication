@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remove"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onOKButtonClick"
+            android:text="@string/ok"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/static_routing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Static" />
+
+        <CheckBox
+            android:id="@+id/rip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RIP" />
+
+        <CheckBox
+            android:id="@+id/ospf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OSPF" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

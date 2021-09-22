@@ -12,6 +12,8 @@
         <activity android:name=".LogicalHostActivity"></activity>
         <activity android:name=".LogicalSwitchActivity" />
         <activity android:name=".LogicalRouterActivity" />
+        <activity android:name=".RoutingActivity" />
+        <activity android:name=".ACLActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="landscape">
