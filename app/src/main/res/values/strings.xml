@@ -5,6 +5,7 @@
     <string name="routing">ルーティング</string>
     <string name="acl">ACL</string>
     <string name="memo">メモ</string>
+    <string name="issue">発行</string>
     <string name="router_line1">特権EXECモードのパスワード：</string>
     <string name="router_line2">hostname</string>
     <string name="router_line3">ip domain-lookup</string>

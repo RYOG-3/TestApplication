@@ -28,12 +28,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
+        <!--
         <CheckBox
             android:id="@+id/static_routing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Static" />
+        -->
 
         <CheckBox
             android:id="@+id/rip"

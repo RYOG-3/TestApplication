@@ -3,11 +3,16 @@ package com.example.testapplication;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.ImageViewCompat;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -15,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.content.Context;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,16 +29,22 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
     private int cableNum = 0; // 結線したケーブルの数
+    private int arrowNum = 0; // 矢印の数
     private float start_X, start_Y; // ケーブルの削除をする時に使用する
-    protected static ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち
-    protected static ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち
-    protected static ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち
-    protected static ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち
+    protected static ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち(削除したのも含む)
+    protected static ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち(削除したのも含む)
+    protected static ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち(削除したのも含む)
+    protected static ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち(削除したのも含む)
+    protected static ArrayList<ACLArrow> arrows = new ArrayList<>(); // ACLの矢印たち(削除したのも含む)
     protected static Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
     private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
     private Memo memo; // メモ機能で使う描画用クラス
     private static MainActivity instance = null;
-    private final int RESULT_SUBACTIVITY = 1000;
+    private final int RESULT_LOGICALROUTER = 1000;
+    private final int RESULT_LOGICALSWITCH = 2000;
+    private final int RESULT_LOGICALHOST = 3000;
+    private final int RESULT_ROUTINGACTIVITY = 4000;
+    private final int RESULT_ACLACTIVITY = 5000;
 
     private Context context = this;
 
@@ -147,20 +160,23 @@ public class MainActivity extends AppCompatActivity {
                         float end_X = event.getRawX();
                         float end_Y = event.getRawY();
 
-                        for (Cable cable: cables) {
-                            if (cable.onTouch(start_X, start_Y)) {
+                        for (Cable cable : cables) {
+                            if (cable == null) {
+                                continue;
+                            } else if (cable.onTouch(start_X, start_Y)) {
                                 System.out.println("ケーブルをタッチしました");
                                 judge = true;
                             }
                         }
 
-                        if (judge == false){
-                            for (Cable cable: cables) {
+                        if (judge == false) {
+                            for (Cable cable : cables) {
                                 System.out.println("Test");
-                                if (cable.disconnected(start_X, start_Y, end_X, end_Y)) {
+                                if (cable == null) {
+                                    continue;
+                                } else if (cable.disconnected(start_X, start_Y, end_X, end_Y)) {
                                     judge = true;
-                                    cables.remove(cable.getCable_ID());
-                                    --cableNum;
+                                    cables.set(cable.getCable_ID(), null);
                                     layout.removeView(cable); // ケーブルを削除する
                                     System.out.println("ケーブルを削除しました");
                                 }
@@ -169,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
 
                         if (!judge) {
                             System.out.println("ルータを配置");
-                            float new_X = (int)event.getRawX();
-                            float new_Y = (int)event.getRawY();
+                            float new_X = (int) event.getRawX();
+                            float new_Y = (int) event.getRawY();
                             Router router = new Router(this, new_X, new_Y, routerNum++);
                             routers.add(router);
                             DeviceListener listener = new DeviceListener();
@@ -179,10 +195,10 @@ public class MainActivity extends AppCompatActivity {
                             layout.addView(router); // 先にaddViewをしないとヌルポになる
 
                             router.setLayoutParams(new ConstraintLayout.LayoutParams(width, height)); // パラメータで画像の幅と高さの設定
-                            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams)router.getLayoutParams();
-                            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)layoutParams;
-                            mlp.leftMargin = (int)(new_X-width/2); // 左のマージンを設定する
-                            mlp.topMargin = (int)(new_Y-height/2); // 上のマージンを設定する
+                            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) router.getLayoutParams();
+                            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) layoutParams;
+                            mlp.leftMargin = (int) (new_X - width / 2); // 左のマージンを設定する
+                            mlp.topMargin = (int) (new_Y - height / 2); // 上のマージンを設定する
                             // mlp.setMargins(new_X, new_Y,new_X,new_Y); //上下左右のマージンを設定する
 
                             /**
@@ -201,9 +217,9 @@ public class MainActivity extends AppCompatActivity {
                             TextView hostname = router.getHostname();
                             hostname.setElevation(2);
                             layout.addView(hostname);
-                            layoutParams = (ConstraintLayout.LayoutParams)hostname.getLayoutParams();
-                            mlp = (ViewGroup.MarginLayoutParams)layoutParams;
-                            mlp.leftMargin = (int)(new_X-width/2 + 50); // 左のマージンを設定する
+                            layoutParams = (ConstraintLayout.LayoutParams) hostname.getLayoutParams();
+                            mlp = (ViewGroup.MarginLayoutParams) layoutParams;
+                            mlp.leftMargin = (int) (new_X - width / 2 + 50); // 左のマージンを設定する
                             mlp.topMargin = 0; // 上のマージンを設定する
                             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
                             layoutParams.topToBottom = router.getId();
@@ -216,7 +232,28 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case Logical:
-                // 多分使わない
+                switch (event.getAction()) {
+                    // 単純にタッチされた
+                    case MotionEvent.ACTION_DOWN: // タッチし始めた時
+                        start_X = event.getRawX();
+                        start_Y = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE: // ドラッグした時
+                        // 何もしない
+                        break;
+                    case MotionEvent.ACTION_UP: // タッチを終了した時
+                        boolean judge = false; // ネットワークの配置なのかケーブルの削除なのかを判断する
+                        float end_X = event.getRawX();
+                        float end_Y = event.getRawY();
+
+                        for (Cable cable : cables) {
+                            if (cable == null) {
+                                continue;
+                            } else if (cable.onTouch(start_X, start_Y)) {
+                                System.out.println("ケーブルをタッチしました");
+                            }
+                        }
+                }
                 break;
             case Routing:
                 /**
@@ -242,6 +279,42 @@ public class MainActivity extends AppCompatActivity {
                  */
                 break;
             case ACL:
+                // ケーブルに沿って線をなぞると矢印が表示されるようにする
+                switch (event.getAction()) {
+                    // 単純にタッチされた
+                    case MotionEvent.ACTION_DOWN: // タッチし始めた時
+                        start_X = event.getRawX();
+                        start_Y = event.getRawY();
+                        break;
+                    case MotionEvent.ACTION_MOVE: // ドラッグした時
+                        // 何もしない
+                        break;
+                    case MotionEvent.ACTION_UP: // タッチを終了した時
+                        float end_X = event.getRawX();
+                        float end_Y = event.getRawY();
+                        for (Cable cable : MainActivity.cables) {
+                            if (cable.onTouch(start_X, start_Y)) {
+                                System.out.println("ケーブルをなぞりました");
+                                ACLArrow arrow = new ACLArrow(this, start_X, start_Y, end_X, end_Y, arrowNum++, cable);
+                                arrows.add(arrow);
+                                layout.addView(arrow);
+                                arrow.setElevation(2);
+                                arrow.setLayoutParams(new ConstraintLayout.LayoutParams(50, 50)); // パラメータで画像の幅と高さの設定
+                                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)arrow.getLayoutParams();
+                                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
+                                mlp.leftMargin = (int)arrow.getCenterX();
+                                mlp.topMargin = (int)arrow.getCenterY();
+                                lp.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+                                lp.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+                                arrow.setLayoutParams(lp);
+                                Bitmap bitmap = ((BitmapDrawable)arrow.getDrawable()).getBitmap(); // arrowのBitmap情報を取得
+                                Bitmap rotate_bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), arrow.getMatrix(), true);
+                                arrow.setImageBitmap(rotate_bitmap);
+                                arrow.setOnTouchListener(new ArrowTouchListener());
+                                break;
+                            }
+                        }
+                }
                 break;
             case Memo:
                 break;
@@ -312,7 +385,9 @@ public class MainActivity extends AppCompatActivity {
                         boolean find = false; // 対象のネットワーク機器を発見したかどうか
                         Cable cable;
                         for (Router router: routers) {
-                            if (router.getCenterX()-100 < event.getRawX() && event.getRawX() < router.getCenterX()+100 &&
+                            if (router == null) {
+                                continue;
+                            } else if (router.getCenterX()-100 < event.getRawX() && event.getRawX() < router.getCenterX()+100 &&
                             router.getCenterY()-100 < event.getRawY() && event.getRawY() < router.getCenterY()+100) {
                                 cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), router.getCenterX(), router.getCenterY(), cableNum++);
                                 cables.add(cable);
@@ -324,7 +399,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (!find) {
                             for (Switch s: switches) {
-                                if (s.getCenterX() - 100 < event.getRawX() && event.getRawX() < s.getCenterX() + 100 &&
+                                if (s == null) {
+                                    continue;
+                                } else if (s.getCenterX() - 100 < event.getRawX() && event.getRawX() < s.getCenterX() + 100 &&
                                         s.getCenterY() - 100 < event.getRawY() && event.getRawY() < s.getCenterY() + 100) {
                                     cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), s.getCenterX(), s.getCenterY(), cableNum++);
                                     cables.add(cable);
@@ -337,7 +414,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (!find) {
                             for (Host host: hosts) {
-                                if (host.getCenterX() - 100 < event.getRawX() && event.getRawX() < host.getCenterX() + 100 &&
+                                if (host == null) {
+                                    continue;
+                                } else if (host.getCenterX() - 100 < event.getRawX() && event.getRawX() < host.getCenterX() + 100 &&
                                         host.getCenterY() - 100 < event.getRawY() && event.getRawY() < host.getCenterY() + 100) {
                                     cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), host.getCenterX(), host.getCenterY(), cableNum++);
                                     cables.add(cable);
@@ -364,11 +443,10 @@ public class MainActivity extends AppCompatActivity {
                             l.topToBottom = s.getId();
                             hostname.setLayoutParams(l);
                             hostname.setElevation(2);
-                            routers.remove(((Router) v).getID());
+                            routers.set(((Router) v).getID(), null);
                             s.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
                             layout.removeView(router.getHostname()); // 前のラベルを削除
-                            routerNum--;
                             layout.addView(s);
                             layout.addView(hostname);
                             System.out.println("スイッチに変更");
@@ -383,18 +461,19 @@ public class MainActivity extends AppCompatActivity {
                             l.topToBottom = host.getId();
                             hostname.setLayoutParams(l);
                             hostname.setElevation(2);
-                            switches.remove(((Switch) v).getID());
-                            switchNum--;
+                            switches.set(((Switch) v).getID(), null);
                             host.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
                             layout.removeView(s.getHostname()); // 前のラベルを削除
                             layout.addView(host);
                             layout.addView(hostname);
+                            /**
                             if (host.getID() == 0) {
                                 layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 1));
                             } else {
                                 layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 10));
                             }
+                             */
 
                             System.out.println("ホストに変更");
                         } else {
@@ -408,11 +487,10 @@ public class MainActivity extends AppCompatActivity {
                             l.topToBottom = router.getId();
                             hostname.setLayoutParams(l);
                             hostname.setElevation(2);
-                            hosts.remove(((Host) v).getID());
-                            hostNum--;
+                            hosts.set(((Host) v).getID(), null);
                             router.setOnTouchListener(new DeviceListener());
                             layout.removeView(v); // タッチしたViewを削除する
-                            layout.removeView(router.getHostname()); // 前のラベルを削除
+                            layout.removeView(host.getHostname()); // 前のラベルを削除
                             layout.addView(router);
                             layout.addView(hostname);
                             System.out.println("ルータに変更");
@@ -433,6 +511,7 @@ public class MainActivity extends AppCompatActivity {
 
     // SubActivityの開始を決めるクラス
     private class SetInformationListener implements View.OnTouchListener {
+        int requestCode;
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
@@ -444,38 +523,86 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent;
                     if (v.getClass() == Router.class) {
                         intent = new Intent(MainActivity.this, LogicalRouterActivity.class);
+                        requestCode = 1000;
                     } else if (v.getClass() == Switch.class) {
                         intent = new Intent(MainActivity.this, LogicalSwitchActivity.class);
+                        requestCode = 2000;
                     } else if (v.getClass() == Host.class) {
                         intent = new Intent(MainActivity.this, LogicalHostActivity.class);
+                        requestCode = 3000;
                     } else {
                         intent = null;
+                        requestCode = 0;
                     }
 
-                    startActivity(intent);
+                    startActivityForResult(intent, requestCode);
                     break;
             }
             return true;
         }
     }
 
+    private class ArrowTouchListener implements View.OnTouchListener {
+        int requestCode;
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Intent intent;
+                    ACLArrow aclArrow = (ACLArrow)v;
+
+
+                    if (aclArrow.getIsJudge()) {
+                        intent = new Intent(MainActivity.this, ACLActivity.class);
+                        System.out.println("インバウンド");
+                        requestCode = 5000; // インバウンド用
+                    } else if (!aclArrow.getIsJudge()) {
+                        intent = new Intent(MainActivity.this, ACLActivity.class);
+                        System.out.println("アウトバウンド");
+                        requestCode = 6000; // アウトバウンド用
+                    } else {
+                        intent = null;
+                        requestCode = 0;
+                    }
+
+                    startActivityForResult(intent, requestCode);
+                    break;
+            }
+            return true;
+        }
+    }
+
+
+
     protected void startRoutingActivity() {
         Intent intent;
         intent = new Intent(MainActivity.this, RoutingActivity.class);
-        startActivity(intent);
-    }
-
-    protected void startACLActivity() {
-        Intent intent;
-        intent = new Intent(MainActivity.this, ACLActivity.class);
-        startActivity(intent);
+        int requestCode = 4000;
+        startActivityForResult(intent, requestCode);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        if (resultCode == RESULT_OK && requestCode == RESULT_SUBACTIVITY && intent != null) {
+        if (resultCode == RESULT_OK && intent != null) {
             // ここから遷移先からのデータを受け取る
+            switch (requestCode) {
+                case RESULT_LOGICALROUTER: // ルータの論理構成図
+                    // String enablePassword = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+                    break;
+                case RESULT_LOGICALSWITCH: // スイッチの論理構成図
+                    break;
+                case RESULT_LOGICALHOST: // ホストの論理構成図
+                    break;
+                case RESULT_ROUTINGACTIVITY: // ルーティング図のアクティビティ
+                    break;
+                case RESULT_ACLACTIVITY: // ACL図のアクティビティ
+                    break;
+            }
         }
     }
 

@@ -59,6 +59,14 @@
             android:layout_weight="1"
             android:text="@string/memo"
             style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/issue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/issue"
+            style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
     <FrameLayout
@@ -69,13 +77,6 @@
 
         <com.example.testapplication.RoutingCircle
             android:id="@+id/routingCircle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.example.testapplication.ACLArrow
-            android:id="@+id/aclArrow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"

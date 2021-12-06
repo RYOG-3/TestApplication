@@ -18,12 +18,14 @@ public class Host extends AppCompatImageView implements Device {
         this.y = y;
         this.host_ID = host_ID;
         hostname = new TextView(context);
-        // hostname.setText("Host" + host_ID);
+        hostname.setText("Host" + host_ID);
+        /**
         if (host_ID == 0) {
             hostname.setText("VLAN10"); // 仮のやつすぐに消す！
         } else {
             hostname.setText("VLAN20"); // 仮のやつすぐに消す！
         }
+         */
 
         hostname.setTextColor(Color.GREEN);
         this.setImageResource(R.drawable.host);

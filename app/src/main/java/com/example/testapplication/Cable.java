@@ -15,16 +15,24 @@ import androidx.constraintlayout.widget.ConstraintLayout;
  */
 
 public class Cable extends View {
-    private float x1, y1; // 始点のx座標とy座標
+    private float x1, y1; // 始点のx座標とy座標 (始点と終点は X1 <= x2 と定義する)
     private float x2, y2; // 終点のx座標とy座標
     private int cable_ID; // ケーブルの番号
 
     public Cable(Context context, float x1, float y1, float x2, float y2, int cable_ID) {
         super(context);
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        if (x1 <= x2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        } else {
+            this.x1 = x2;
+            this.y1 = y2;
+            this.x2 = x1;
+            this.y2 = y1;
+        }
+
         this.cable_ID = cable_ID;
     }
 
@@ -77,16 +85,15 @@ public class Cable extends View {
     protected boolean onTouch(float x, float y) {
         boolean judge = false;
 
-        if (Math.max(x1, x2) >= x && x >= Math.min(x1, x2)) { // x1とx2の間にx座標がある
-            if (Math.max(y1, y2) >= y && y >= Math.min(y1, y2)) { // y1とy2の間にy座標がある
-                if (-10000 <= ((y1 - y2) * (x - x1) - (y - y1) * (x1 - x2)) &&
-                        ((y1 - y2) * (x - x1) - (y - y1) * (x1 - x2)) <= 10000) {// ケーブル上に点がある(ざっくり) 下限と上限の数値は大きければ大きいほど判定が曖昧になるはず
+        if (x2 + 10 >= x && x >= x1 - 10) { // x1とx2の間にx座標がある
+            if (Math.max(y1, y2) + 10 >= y && y >= Math.min(y1, y2) - 10) { // y1とy2の間にy座標がある
+                if (-10000 <= ((y2 - y1) * (x - x1) - (x2 - x1) * (y - y1)) &&
+                        ((y1 - y2) * (x - x1) - (y - y1) * (x1 - x2)) <= 10000) {// ケーブル上に点がある(ざっくり) 下限と上限の数値は大きければ大きいほど判定が曖昧になる(点と直線の距離の公式を参照)
                     judge = true;
                 }
             }
         }
-        System.out.println((y1 - y2) * (x - x1));
-        System.out.println((y - y1) * (x1 - x2));
+        System.out.println((y1 - y2) * (x - x1) - (y - y1) * (x1 - x2));
         System.out.println("テスト");
 
         return judge;

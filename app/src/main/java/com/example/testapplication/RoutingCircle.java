@@ -102,9 +102,8 @@ public class RoutingCircle extends View {
         float y = event.getY();
 
         if (MainActivity.mode == Mode.Routing) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN && onTouch(x, y)) { // 円をタッチしたらアクティビティを開始
+            if (event.getAction() == MotionEvent.ACTION_DOWN && (judge = onTouch(x, y))) { // 円をタッチしたらアクティビティを開始
                 MainActivity.getInstance().startRoutingActivity();
-                judge = true;
             } else if (!judge) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -159,6 +158,9 @@ public class RoutingCircle extends View {
 
         System.out.println(pm.getLength());
         for (Router router : MainActivity.routers) {
+            if (router == null) {
+                continue;
+            }
             split = 0.0f;
             while (split < 1.0f) {
                 pm.getPosTan(pm.getLength() * split, aCoordinate, null);
@@ -203,9 +205,9 @@ public class RoutingCircle extends View {
     protected boolean onTouch(float x, float y) {
         boolean judge = false;
         float aCoordinate[] = {0f, 0f}; // 必要な座標を取得するための配列を用意
-        float split = 0.0f;
 
         for (RoutingDrawLine line : lines) {
+            float split = 0.0f;
             while (split < 1.0f) {
                 PathMeasure pm = new PathMeasure(line.path, true); // Pathを測定するクラスを用意
                 pm.getPosTan(pm.getLength() * split, aCoordinate, null);
@@ -216,6 +218,8 @@ public class RoutingCircle extends View {
                     judge = true;
                     System.out.println("円がタッチされました");
                     break;
+                } else {
+                    System.out.println("not Touch");
                 }
 
                 split += 0.001f;
