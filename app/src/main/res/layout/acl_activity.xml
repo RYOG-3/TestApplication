@@ -37,7 +37,7 @@
             android:id="@+id/accessListNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -53,11 +53,93 @@
             android:layout_height="wrap_content"
             android:entries="@array/access_type"/>
 
-        <EditText
-            android:id="@+id/execTextPassword"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:text="@string/ipaddress"/>
+
+        <EditText
+            android:id="@+id/ipaddress1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wildcard"/>
+
+        <EditText
+            android:id="@+id/wildcard1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -75,7 +157,7 @@
             android:id="@+id/accessListNum2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -91,15 +173,97 @@
             android:layout_height="wrap_content"
             android:entries="@array/access_type"/>
 
-        <EditText
-            android:id="@+id/execTextPassword2"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:text="@string/ipaddress"/>
+
+        <EditText
+            android:id="@+id/ipaddress1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress2_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress3_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/ipaddress4_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wildcard"/>
+
+        <EditText
+            android:id="@+id/wildcard1_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard2_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard3_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="."/>
+
+        <EditText
+            android:id="@+id/wildcard4_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-
+<!--
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,5 +282,6 @@
             android:text="@string/plus"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+-->
 
 </LinearLayout>

@@ -51,7 +51,7 @@ public class Memo extends View {
         paint = new Paint();
         lines = new ArrayList<MemoDrawLine>();
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(10);
+        paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
     }
 

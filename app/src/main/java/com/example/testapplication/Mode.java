@@ -5,5 +5,6 @@ public enum Mode {
     Logical,
     Routing,
     ACL,
-    Memo;
+    Memo,
+    Issue;
 }

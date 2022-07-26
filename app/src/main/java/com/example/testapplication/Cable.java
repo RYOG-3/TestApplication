@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
- * ケーブルを描画し、その情報を保持するクラス
+ * ケーブルを描画し、その情報を保持するクラス(カスタムビュー)
  */
 
 public class Cable extends View {
@@ -19,7 +19,10 @@ public class Cable extends View {
     private float x2, y2; // 終点のx座標とy座標
     private int cable_ID; // ケーブルの番号
 
-    public Cable(Context context, float x1, float y1, float x2, float y2, int cable_ID) {
+    private Device device1; // ケーブルに繋がったネットワーク機器
+    private Device device2; // 始点側とか終点側とか決めていない
+
+    public Cable(Context context, float x1, float y1, float x2, float y2, int cable_ID, Device device1, Device device2) {
         super(context);
         if (x1 <= x2) {
             this.x1 = x1;
@@ -34,6 +37,8 @@ public class Cable extends View {
         }
 
         this.cable_ID = cable_ID;
+        this.device1 = device1;
+        this.device2 = device2;
     }
 
     // 描画機能を記述
@@ -115,5 +120,26 @@ public class Cable extends View {
         return end;
     }
 
+    /**
+     * device1のゲッターとセッター
+     */
+    public Device getDevice1() {
+        return device1;
+    }
+
+    public void setDevice1(Device device1) {
+        this.device1 = device1;
+    }
+
+    /**
+     * device2のゲッターとセッター
+     */
+    public Device getDevice2() {
+        return device2;
+    }
+
+    public void setDevice2(Device device2) {
+        this.device2 = device2;
+    }
 
 }

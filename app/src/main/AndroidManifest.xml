@@ -12,6 +12,7 @@
         <activity android:name=".LogicalHostActivity"></activity>
         <activity android:name=".LogicalSwitchActivity" />
         <activity android:name=".LogicalRouterActivity" />
+        <activity android:name=".CableActivity"/>
         <activity android:name=".RoutingActivity" />
         <activity android:name=".ACLActivity" />
         <activity
@@ -24,5 +25,6 @@
             </intent-filter>
         </activity>
     </application>
-
+    <!--通信の許可-->
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

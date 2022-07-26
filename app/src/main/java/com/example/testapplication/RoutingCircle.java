@@ -166,9 +166,9 @@ public class RoutingCircle extends View {
                 pm.getPosTan(pm.getLength() * split, aCoordinate, null);
                 if (router.getCenterX() < aCoordinate[0] && router.getCenterY() > aCoordinate[1]) {
                     judge[0] = true;
-                } else if (router.getCenterX() < aCoordinate[0] && router.getCenterY() < aCoordinate[1]) {
+                } else if (router.getCenterX() < aCoordinate[0] + 100 && router.getCenterY() < aCoordinate[1] + 100) { // 100は下駄を履かせてる
                     judge[1] = true;
-                } else if (router.getCenterX() > aCoordinate[0] && router.getCenterY() < aCoordinate[1]) {
+                } else if (router.getCenterX() > aCoordinate[0] && router.getCenterY() < aCoordinate[1] + 100) {
                     judge[2] = true;
                 } else if (router.getCenterX() > aCoordinate[0] && router.getCenterY() > aCoordinate[1]) {
                     judge[3] = true;

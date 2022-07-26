@@ -24,6 +24,7 @@
     <string name="switch_line2">VLAN番号 :</string>
     <string name="switch_line3">VLAN名前 :</string>
     <string name="ipaddress">IP address :</string>
+    <string name="wildcard">ワイルドカード</string>
     <string name="subnet">subnet mask :</string>
     <string name="shutdown">shutdown</string>
     <string name="access">access</string>

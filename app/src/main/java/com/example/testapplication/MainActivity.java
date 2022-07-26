@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected static Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
     private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
     private Memo memo; // メモ機能で使う描画用クラス
+    private Device targetDevice; // サブアクティビティを開始した時にどのネットワーク機器を対象にしているかを示す変数
     private static MainActivity instance = null;
     private final int RESULT_LOGICALROUTER = 1000;
     private final int RESULT_LOGICALSWITCH = 2000;
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 mode = Mode.Physical;
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.INVISIBLE);
+                }
                 System.out.println("物理構成モードに変更");
             }
         });
@@ -84,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 mode = Mode.Logical;
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.INVISIBLE);
+                }
                 System.out.println("論理構成モードに変更");
             }
         });
@@ -98,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 mode = Mode.Routing;
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.INVISIBLE);
+                }
                 System.out.println("ルーティングモードに変更");
             }
         });
@@ -112,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
                 mode = Mode.ACL;
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.VISIBLE);
+                }
                 System.out.println("ACLモードに変更");
             }
         });
@@ -126,7 +140,40 @@ public class MainActivity extends AppCompatActivity {
                 mode = Mode.Memo;
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.INVISIBLE);
+                }
                 System.out.println("メモモードに変更");
+            }
+        });
+
+        /**
+         * 発行ボタンのリスナー設定
+         */
+        Button issue = findViewById(R.id.issue);
+        issue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mode = Mode.Issue;
+                routingCircle.routingInvalidate();
+                memo.memoInvalidate();
+                for (ACLArrow arrow : arrows) {
+                    arrow.setVisibility(View.INVISIBLE);
+                }
+                System.out.println("設定コマンドを発行します");
+                new HttpRequestor(
+                        MainActivity.this, // コンテキスト
+                        "http://192.168.0.133:10000", // 接続先URL
+                        "読込中...", // 通信中に砂時計に表示するメッセージ
+                    b -> {
+                    // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
+                        System.out.println(new String(b));
+                        },
+                    e -> {
+                        // 通信失敗時のコールバック処理。eはException。
+                        System.out.println(e.toString());
+                    }
+                ).execute();
             }
         });
 
@@ -219,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                             layout.addView(hostname);
                             layoutParams = (ConstraintLayout.LayoutParams) hostname.getLayoutParams();
                             mlp = (ViewGroup.MarginLayoutParams) layoutParams;
-                            mlp.leftMargin = (int) (new_X - width / 2 + 50); // 左のマージンを設定する
+                            mlp.leftMargin = (int) (new_X - width / 2); // 左のマージンを設定する
                             mlp.topMargin = 0; // 上のマージンを設定する
                             layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
                             layoutParams.topToBottom = router.getId();
@@ -250,7 +297,8 @@ public class MainActivity extends AppCompatActivity {
                             if (cable == null) {
                                 continue;
                             } else if (cable.onTouch(start_X, start_Y)) {
-                                System.out.println("ケーブルをタッチしました");
+                                System.out.println("インターフェイスとipアドレスまたはVLANを選択してください");
+                                startCableActivity(cable);
                             }
                         }
                 }
@@ -293,7 +341,8 @@ public class MainActivity extends AppCompatActivity {
                         float end_X = event.getRawX();
                         float end_Y = event.getRawY();
                         for (Cable cable : MainActivity.cables) {
-                            if (cable.onTouch(start_X, start_Y)) {
+                            if (cable == null);
+                            else if (cable.onTouch(start_X, start_Y)) {
                                 System.out.println("ケーブルをなぞりました");
                                 ACLArrow arrow = new ACLArrow(this, start_X, start_Y, end_X, end_Y, arrowNum++, cable);
                                 arrows.add(arrow);
@@ -389,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
                                 continue;
                             } else if (router.getCenterX()-100 < event.getRawX() && event.getRawX() < router.getCenterX()+100 &&
                             router.getCenterY()-100 < event.getRawY() && event.getRawY() < router.getCenterY()+100) {
-                                cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), router.getCenterX(), router.getCenterY(), cableNum++);
+                                cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), router.getCenterX(), router.getCenterY(), cableNum++, (Device)v, (Device)router);
                                 cables.add(cable);
                                 layout.addView(cable);
                                 System.out.println("結線完了");
@@ -403,7 +452,7 @@ public class MainActivity extends AppCompatActivity {
                                     continue;
                                 } else if (s.getCenterX() - 100 < event.getRawX() && event.getRawX() < s.getCenterX() + 100 &&
                                         s.getCenterY() - 100 < event.getRawY() && event.getRawY() < s.getCenterY() + 100) {
-                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), s.getCenterX(), s.getCenterY(), cableNum++);
+                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), s.getCenterX(), s.getCenterY(), cableNum++, (Device)v, (Device)s);
                                     cables.add(cable);
                                     layout.addView(cable);
                                     System.out.println("結線完了");
@@ -418,7 +467,7 @@ public class MainActivity extends AppCompatActivity {
                                     continue;
                                 } else if (host.getCenterX() - 100 < event.getRawX() && event.getRawX() < host.getCenterX() + 100 &&
                                         host.getCenterY() - 100 < event.getRawY() && event.getRawY() < host.getCenterY() + 100) {
-                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), host.getCenterX(), host.getCenterY(), cableNum++);
+                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), host.getCenterX(), host.getCenterY(), cableNum++, (Device)v, (Device)host);
                                     cables.add(cable);
                                     layout.addView(cable);
                                     System.out.println("結線完了");
@@ -523,13 +572,27 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent;
                     if (v.getClass() == Router.class) {
                         intent = new Intent(MainActivity.this, LogicalRouterActivity.class);
+                        Router router = (Router)v;
+                        intent.putExtra("hostname", router.getHostname().getText());
+                        intent.putExtra("ip_domain_lookup", router.getIp_domain_lookup());
+                        intent.putExtra("banner", router.getBanner());
+                        intent.putExtra("service_password", router.getService_password());
+                        intent.putExtra("ip_domain_name", router.getDomain_name());
+                        intent.putExtra("enable_secret", router.getEnable_secret());
+                        intent.putExtra("password", router.getPassword());
+                        intent.putExtra("logging", router.getLogging());
                         requestCode = 1000;
+                        setTargetDevice((Device)v);
                     } else if (v.getClass() == Switch.class) {
                         intent = new Intent(MainActivity.this, LogicalSwitchActivity.class);
+                        intent.putExtra("hostname", ((Switch)v).getHostname().getText());
                         requestCode = 2000;
+                        setTargetDevice((Device)v);
                     } else if (v.getClass() == Host.class) {
                         intent = new Intent(MainActivity.this, LogicalHostActivity.class);
+                        intent.putExtra("hostname", ((Host)v).getHostname().getText());
                         requestCode = 3000;
+                        setTargetDevice((Device)v);
                     } else {
                         intent = null;
                         requestCode = 0;
@@ -559,11 +622,11 @@ public class MainActivity extends AppCompatActivity {
                     if (aclArrow.getIsJudge()) {
                         intent = new Intent(MainActivity.this, ACLActivity.class);
                         System.out.println("インバウンド");
-                        requestCode = 5000; // インバウンド用
+                        requestCode = 4000; // インバウンド用
                     } else if (!aclArrow.getIsJudge()) {
                         intent = new Intent(MainActivity.this, ACLActivity.class);
                         System.out.println("アウトバウンド");
-                        requestCode = 6000; // アウトバウンド用
+                        requestCode = 5000; // アウトバウンド用
                     } else {
                         intent = null;
                         requestCode = 0;
@@ -581,22 +644,86 @@ public class MainActivity extends AppCompatActivity {
     protected void startRoutingActivity() {
         Intent intent;
         intent = new Intent(MainActivity.this, RoutingActivity.class);
-        int requestCode = 4000;
+        int requestCode = 6000;
         startActivityForResult(intent, requestCode);
+    }
+
+    protected void startCableActivity(Cable cable) {
+        boolean judge = true;
+        String type;
+        Intent intent;
+        intent = new Intent(MainActivity.this, CableActivity.class);
+        int requestCode = 7000;
+        Device device1 = cable.getDevice1();
+        Device device2 = cable.getDevice2();
+
+
+        if ((device1.getClass() == Switch.class && device2.getClass() == Router.class) ||
+                (cable.getDevice1().getClass() == Router.class && cable.getDevice2().getClass() == Switch.class)) {
+            type = "RouterAndSwitch";
+            intent.putExtra("Type", type);
+        } else if (device1.getClass() == Router.class || device2.getClass() == Router.class) {
+            type = "Router";
+            intent.putExtra("Type", type);
+            intent.putExtra("TargetHostname1", device1.getHostname().getText());
+            intent.putExtra("TargetHostname2", device2.getHostname().getText());
+        } else if (device1.getClass() == Switch.class || device2.getClass() == Switch.class) {
+            type = "Switch";
+            intent.putExtra("Type", type);
+        } else {
+            System.out.println("エラー");
+            judge = false;
+        }
+        if (judge) {
+            startActivityForResult(intent, requestCode);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+        ConstraintLayout layout = findViewById(R.id.constraintlayout);
 
         if (resultCode == RESULT_OK && intent != null) {
             // ここから遷移先からのデータを受け取る
+            String hostname;
+            Device device = getTargetDevice();
             switch (requestCode) {
                 case RESULT_LOGICALROUTER: // ルータの論理構成図
                     // String enablePassword = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+                    if (intent.getBooleanExtra("Remove", false)) { // ルータの削除の処理(ラベルも消す)
+                        routers.set(device.getID(), null);
+                        layout.removeView((View)device);
+                        layout.removeView(device.getHostname());
+                    }
+                    hostname = intent.getStringExtra("hostname");
+                    if (hostname != null) {
+                        device.getHostname().setText(hostname);
+                    }
+                    System.out.println(hostname);
                     break;
                 case RESULT_LOGICALSWITCH: // スイッチの論理構成図
+                    if (intent.getBooleanExtra("Remove", false)) { // スイッチの削除の処理(ラベルも消す)
+                        switches.set(device.getID(), null);
+                        layout.removeView((View)device);
+                        layout.removeView(device.getHostname());
+                    }
+                    hostname = intent.getStringExtra("hostname");
+                    if (hostname != null) {
+                        device.getHostname().setText(hostname);
+                    }
+                    System.out.println(hostname);
                     break;
                 case RESULT_LOGICALHOST: // ホストの論理構成図
+                    if (intent.getBooleanExtra("Remove", false)) { // ホストの削除の処理(ラベルも消す)
+                        hosts.set(device.getID(), null);
+                        layout.removeView((View)device);
+                        layout.removeView(device.getHostname());
+                    }
+                    hostname = intent.getStringExtra("hostname");
+                    if (hostname != null) {
+                        device.getHostname().setText(hostname);
+                    }
+                    System.out.println(hostname);
                     break;
                 case RESULT_ROUTINGACTIVITY: // ルーティング図のアクティビティ
                     break;
@@ -610,5 +737,15 @@ public class MainActivity extends AppCompatActivity {
         return instance;
     }
 
+    /**
+     * targetDeviceのセッター
+     */
+    public void setTargetDevice(Device device) {
+        targetDevice = device;
+    }
+
+    public Device getTargetDevice() {
+        return targetDevice;
+    }
 
 }

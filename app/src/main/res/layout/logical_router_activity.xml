@@ -21,6 +21,7 @@
                 android:id="@+id/remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="onDeleteButtonClick"
                 android:text="@string/remove"/>
 
             <Button
@@ -39,25 +40,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line1"/>
-
-            <EditText
-                android:id="@+id/execTextPassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:text="@string/router_line2"/>
 
             <EditText
@@ -79,15 +64,18 @@
                 android:text="@string/router_line3"/>
 
             <RadioGroup
+                android:id="@+id/ip_domain_lookup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/enable"/>
                 <RadioButton
+                    android:id="@+id/disable1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/disable"/>
@@ -131,15 +119,18 @@
                 android:text="@string/router_line5"/>
 
             <RadioGroup
+                android:id="@+id/encryption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/enable"/>
                 <RadioButton
+                    android:id="@+id/disable2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/disable"/>
@@ -219,16 +210,19 @@
                 android:text="@string/router_line10" />
 
             <RadioGroup
+                android:id="@+id/logging"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/enable" />
 
                 <RadioButton
+                    android:id="@+id/disable3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/disable" />
@@ -237,6 +231,7 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!--
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp"
@@ -500,8 +495,9 @@
             </RadioGroup>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
+        -->
         <!--そのばしのぎでこっから下は消す！-->
+        <!--
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -760,5 +756,6 @@
             </RadioGroup>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+    -->
     </LinearLayout>
 </ScrollView>

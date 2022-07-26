@@ -2,6 +2,7 @@ package com.example.testapplication;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
@@ -27,7 +28,9 @@ public class Host extends AppCompatImageView implements Device {
         }
          */
 
-        hostname.setTextColor(Color.GREEN);
+        hostname.setTextColor(Color.RED);
+        hostname.setWidth(200);
+        hostname.setGravity(Gravity.CENTER_HORIZONTAL);
         this.setImageResource(R.drawable.host);
         this.setId(3000+host_ID);
     }
