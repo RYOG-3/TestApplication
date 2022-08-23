@@ -39,6 +39,13 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
     private Exception exception = null;
     private ProgressDialog progressDialog = null;
 
+    // NETCONF_TestData
+    private String dataString = "<config>" +
+            "    <native xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XE-native\">" +
+            "        <hostname>R1</hostname>" +
+            "    </native>" +
+            "</config>";
+
     /**
      * コンストラクタ
      * @param context コンテキスト
@@ -53,7 +60,7 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
         this.message = message;
         this.callback = callback;
         this.errorCallback = errorCallback;
-}
+    }
 
     @Override
     protected void onPreExecute() {
@@ -63,7 +70,8 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
         this.progressDialog.setMessage(this.message);
         progressDialog.setCancelable(false);
         this.progressDialog.show();
-        super.onPreExecute();
+
+        super.onPreExecute(); // doInBackground 前処理
     }
 
     @Override
@@ -73,7 +81,14 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
             // HTTPリクエスト
             final URL url = new URL(this.url);
             con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true); // Body の追加を許可
+
+
+
+            // 接続
             con.connect();
+            System.out.println("接続を開始します");
 
             final int status = con.getResponseCode();
             if (status == HttpURLConnection.HTTP_OK) {
