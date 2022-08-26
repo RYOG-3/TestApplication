@@ -1,55 +1,48 @@
 package com.example.testapplication;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.ImageViewCompat;
-
-
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.content.Context;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
-    private int cableNum = 0; // 結線したケーブルの数
-    private int arrowNum = 0; // 矢印の数
-    private float start_X, start_Y; // ケーブルの削除をする時に使用する
     protected static ArrayList<Router> routers = new ArrayList<>(); // 配置したルータたち(削除したのも含む)
     protected static ArrayList<Switch> switches = new ArrayList<>(); // 配置したスイッチたち(削除したのも含む)
     protected static ArrayList<Host> hosts = new ArrayList<>(); // 配置したホストたち(削除したのも含む)
     protected static ArrayList<Cable> cables = new ArrayList<>(); // 結線したケーブルたち(削除したのも含む)
     protected static ArrayList<ACLArrow> arrows = new ArrayList<>(); // ACLの矢印たち(削除したのも含む)
     protected static Mode mode = Mode.Physical; // 現在の状態(初期状態は物理構成)
-    private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
-    private Memo memo; // メモ機能で使う描画用クラス
-    private Device targetDevice; // サブアクティビティを開始した時にどのネットワーク機器を対象にしているかを示す変数
     private static MainActivity instance = null;
     private final int RESULT_LOGICALROUTER = 1000;
     private final int RESULT_LOGICALSWITCH = 2000;
     private final int RESULT_LOGICALHOST = 3000;
     private final int RESULT_ROUTINGACTIVITY = 4000;
     private final int RESULT_ACLACTIVITY = 5000;
-
+    private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
+    private int cableNum = 0; // 結線したケーブルの数
+    private int arrowNum = 0; // 矢印の数
+    private float start_X, start_Y; // ケーブルの削除をする時に使用する
+    private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
+    private Memo memo; // メモ機能で使う描画用クラス
+    private Device targetDevice; // サブアクティビティを開始した時にどのネットワーク機器を対象にしているかを示す変数
     private Context context = this;
 
+    public static MainActivity getInstance() {
+        return instance;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -163,16 +156,16 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("設定コマンドを発行します");
                 new HttpRequestor(
                         MainActivity.this, // コンテキスト
-                        "http://192.168.0.133:10000", // 接続先URL
-                        "読込中...", // 通信中に砂時計に表示するメッセージ
-                    b -> {
-                    // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
-                        System.out.println(new String(b));
+                        "http://172.27.4.14:10000/", // 接続先URL テスト環境では自分のパソコンのIPアドレス
+                        "発行中...", // 通信中に砂時計に表示するメッセージ
+                        b -> {
+                            // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
+                            System.out.println(new String(b));
                         },
-                    e -> {
-                        // 通信失敗時のコールバック処理。eはException。
-                        System.out.println(e.toString());
-                    }
+                        e -> {
+                            // 通信失敗時のコールバック処理。eはException。
+                            System.out.println(e.toString());
+                        }
                 ).execute();
             }
         });
@@ -305,25 +298,25 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case Routing:
                 /**
-                RoutingCircle routingCircle = new RoutingCircle(this);
-                Path path = routingCircle.getPath();
+                 RoutingCircle routingCircle = new RoutingCircle(this);
+                 Path path = routingCircle.getPath();
 
-                float x = event.getX();
-                float y = event.getY();
+                 float x = event.getX();
+                 float y = event.getY();
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        path.moveTo(x, y);
-                        routingCircle.invalidate();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        path.lineTo(x, y);
-                        routingCircle.invalidate();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        path.lineTo(x, y);
-                        routingCircle.invalidate();
-                        break;
+                 switch (event.getAction()) {
+                 case MotionEvent.ACTION_DOWN:
+                 path.moveTo(x, y);
+                 routingCircle.invalidate();
+                 break;
+                 case MotionEvent.ACTION_MOVE:
+                 path.lineTo(x, y);
+                 routingCircle.invalidate();
+                 break;
+                 case MotionEvent.ACTION_UP:
+                 path.lineTo(x, y);
+                 routingCircle.invalidate();
+                 break;
                  */
                 break;
             case ACL:
@@ -341,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
                         float end_X = event.getRawX();
                         float end_Y = event.getRawY();
                         for (Cable cable : MainActivity.cables) {
-                            if (cable == null);
+                            if (cable == null) ;
                             else if (cable.onTouch(start_X, start_Y)) {
                                 System.out.println("ケーブルをなぞりました");
                                 ACLArrow arrow = new ACLArrow(this, start_X, start_Y, end_X, end_Y, arrowNum++, cable);
@@ -349,14 +342,14 @@ public class MainActivity extends AppCompatActivity {
                                 layout.addView(arrow);
                                 arrow.setElevation(2);
                                 arrow.setLayoutParams(new ConstraintLayout.LayoutParams(50, 50)); // パラメータで画像の幅と高さの設定
-                                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams)arrow.getLayoutParams();
-                                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams)lp;
-                                mlp.leftMargin = (int)arrow.getCenterX();
-                                mlp.topMargin = (int)arrow.getCenterY();
+                                ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) arrow.getLayoutParams();
+                                ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
+                                mlp.leftMargin = (int) arrow.getCenterX();
+                                mlp.topMargin = (int) arrow.getCenterY();
                                 lp.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
                                 lp.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
                                 arrow.setLayoutParams(lp);
-                                Bitmap bitmap = ((BitmapDrawable)arrow.getDrawable()).getBitmap(); // arrowのBitmap情報を取得
+                                Bitmap bitmap = ((BitmapDrawable) arrow.getDrawable()).getBitmap(); // arrowのBitmap情報を取得
                                 Bitmap rotate_bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), arrow.getMatrix(), true);
                                 arrow.setImageBitmap(rotate_bitmap);
                                 arrow.setOnTouchListener(new ArrowTouchListener());
@@ -373,273 +366,6 @@ public class MainActivity extends AppCompatActivity {
 
         return false;
     }
-
-    /**
-     * ネットワーク機器に対するイベントリスナーのメンバークラス
-     * 物理構成図と論理構成図で使用する予定
-     */
-    private class DeviceListener implements View.OnTouchListener {
-        private ConstraintLayout layout = findViewById(R.id.constraintlayout);
-        private PhysicalChangeListener physicalChangeListener = new PhysicalChangeListener();
-        private SetInformationListener setInformationListener = new SetInformationListener();
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (mode) {
-                case Physical: // 物理構成モードのときにネットワーク機器をタッチすると発生するイベント
-                    System.out.println("物理イベント発生");
-                    physicalChangeListener.onTouch(v, event);
-                    break;
-
-                case Logical: // 論理構成モードのときにネットワーク機器をタッチすると発生するイベント
-                    System.out.println("論理イベント発生");
-                    setInformationListener.onTouch(v, event);
-                    break;
-
-                default:
-                    break;
-            }
-            /**
-             * 戻り値をtrueにすることで親のLayoutのタッチイベントが発生しない
-             */
-            return true;
-        }
-    }
-
-    private class PhysicalChangeListener implements View.OnTouchListener {
-        private ConstraintLayout layout = findViewById(R.id.constraintlayout);
-        private boolean connecting = false; // 結線中
-
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    connecting = false;
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    /**
-                     * タッチしたネットワーク機器の範囲外に出た時に結線中とする
-                     */
-                    if (event.getRawX() > ((Device)v).getCenterX()+100 || event.getRawX() < ((Device)v).getCenterX()-100 ||
-                    event.getRawY() > ((Device)v).getCenterY()+100 || event.getRawY() < ((Device)v).getCenterY()-100) {
-                        connecting = true;
-                        System.out.println("結線中");
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (connecting) {
-                        boolean find = false; // 対象のネットワーク機器を発見したかどうか
-                        Cable cable;
-                        for (Router router: routers) {
-                            if (router == null) {
-                                continue;
-                            } else if (router.getCenterX()-100 < event.getRawX() && event.getRawX() < router.getCenterX()+100 &&
-                            router.getCenterY()-100 < event.getRawY() && event.getRawY() < router.getCenterY()+100) {
-                                cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), router.getCenterX(), router.getCenterY(), cableNum++, (Device)v, (Device)router);
-                                cables.add(cable);
-                                layout.addView(cable);
-                                System.out.println("結線完了");
-                                find = true;
-                                break;
-                            }
-                        }
-                        if (!find) {
-                            for (Switch s: switches) {
-                                if (s == null) {
-                                    continue;
-                                } else if (s.getCenterX() - 100 < event.getRawX() && event.getRawX() < s.getCenterX() + 100 &&
-                                        s.getCenterY() - 100 < event.getRawY() && event.getRawY() < s.getCenterY() + 100) {
-                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), s.getCenterX(), s.getCenterY(), cableNum++, (Device)v, (Device)s);
-                                    cables.add(cable);
-                                    layout.addView(cable);
-                                    System.out.println("結線完了");
-                                    find = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (!find) {
-                            for (Host host: hosts) {
-                                if (host == null) {
-                                    continue;
-                                } else if (host.getCenterX() - 100 < event.getRawX() && event.getRawX() < host.getCenterX() + 100 &&
-                                        host.getCenterY() - 100 < event.getRawY() && event.getRawY() < host.getCenterY() + 100) {
-                                    cable = new Cable(context, ((Device)v).getCenterX(), ((Device)v).getCenterY(), host.getCenterX(), host.getCenterY(), cableNum++, (Device)v, (Device)host);
-                                    cables.add(cable);
-                                    layout.addView(cable);
-                                    System.out.println("結線完了");
-                                    find = true;
-                                    break;
-                                }
-                            }
-                            if (!find) {
-                                System.out.println("結線失敗");
-                            }
-                        }
-
-                    } else {
-                        if (v.getClass() == Router.class) { // getClassでViewクラスではなく子クラスが取り出されることが分かった
-                            Router router = (Router) v;
-                            Switch s = new Switch(context, router.getCenterX(), router.getCenterY(), switchNum++);
-                            s.setLayoutParams(router.getLayoutParams());
-                            switches.add(s);
-                            s.setElevation(2);
-                            TextView hostname = s.getHostname();
-                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)router.getHostname().getLayoutParams();
-                            l.topToBottom = s.getId();
-                            hostname.setLayoutParams(l);
-                            hostname.setElevation(2);
-                            routers.set(((Router) v).getID(), null);
-                            s.setOnTouchListener(new DeviceListener());
-                            layout.removeView(v); // タッチしたViewを削除する
-                            layout.removeView(router.getHostname()); // 前のラベルを削除
-                            layout.addView(s);
-                            layout.addView(hostname);
-                            System.out.println("スイッチに変更");
-                        } else if (v.getClass() == Switch.class) {
-                            Switch s = (Switch) v;
-                            Host host = new Host(context, s.getCenterX(), s.getCenterY(), hostNum++);
-                            host.setLayoutParams(s.getLayoutParams());
-                            hosts.add(host);
-                            host.setElevation(2);
-                            TextView hostname = host.getHostname();
-                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)s.getHostname().getLayoutParams();
-                            l.topToBottom = host.getId();
-                            hostname.setLayoutParams(l);
-                            hostname.setElevation(2);
-                            switches.set(((Switch) v).getID(), null);
-                            host.setOnTouchListener(new DeviceListener());
-                            layout.removeView(v); // タッチしたViewを削除する
-                            layout.removeView(s.getHostname()); // 前のラベルを削除
-                            layout.addView(host);
-                            layout.addView(hostname);
-                            /**
-                            if (host.getID() == 0) {
-                                layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 1));
-                            } else {
-                                layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 10));
-                            }
-                             */
-
-                            System.out.println("ホストに変更");
-                        } else {
-                            Host host = (Host) v;
-                            Router router = new Router(context, host.getCenterX(), host.getCenterY(), routerNum++);
-                            router.setLayoutParams(host.getLayoutParams());
-                            routers.add(router);
-                            router.setElevation(2);
-                            TextView hostname = router.getHostname();
-                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams)host.getHostname().getLayoutParams();
-                            l.topToBottom = router.getId();
-                            hostname.setLayoutParams(l);
-                            hostname.setElevation(2);
-                            hosts.set(((Host) v).getID(), null);
-                            router.setOnTouchListener(new DeviceListener());
-                            layout.removeView(v); // タッチしたViewを削除する
-                            layout.removeView(host.getHostname()); // 前のラベルを削除
-                            layout.addView(router);
-                            layout.addView(hostname);
-                            System.out.println("ルータに変更");
-                        }
-
-                        System.out.println("Change");
-                    }
-                    break;
-
-                default:
-                    break;
-
-            }
-
-            return true;
-        }
-    }
-
-    // SubActivityの開始を決めるクラス
-    private class SetInformationListener implements View.OnTouchListener {
-        int requestCode;
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    break;
-                case MotionEvent.ACTION_UP:
-                    Intent intent;
-                    if (v.getClass() == Router.class) {
-                        intent = new Intent(MainActivity.this, LogicalRouterActivity.class);
-                        Router router = (Router)v;
-                        intent.putExtra("hostname", router.getHostname().getText());
-                        intent.putExtra("ip_domain_lookup", router.getIp_domain_lookup());
-                        intent.putExtra("banner", router.getBanner());
-                        intent.putExtra("service_password", router.getService_password());
-                        intent.putExtra("ip_domain_name", router.getDomain_name());
-                        intent.putExtra("enable_secret", router.getEnable_secret());
-                        intent.putExtra("password", router.getPassword());
-                        intent.putExtra("logging", router.getLogging());
-                        requestCode = 1000;
-                        setTargetDevice((Device)v);
-                    } else if (v.getClass() == Switch.class) {
-                        intent = new Intent(MainActivity.this, LogicalSwitchActivity.class);
-                        intent.putExtra("hostname", ((Switch)v).getHostname().getText());
-                        requestCode = 2000;
-                        setTargetDevice((Device)v);
-                    } else if (v.getClass() == Host.class) {
-                        intent = new Intent(MainActivity.this, LogicalHostActivity.class);
-                        intent.putExtra("hostname", ((Host)v).getHostname().getText());
-                        requestCode = 3000;
-                        setTargetDevice((Device)v);
-                    } else {
-                        intent = null;
-                        requestCode = 0;
-                    }
-
-                    startActivityForResult(intent, requestCode);
-                    break;
-            }
-            return true;
-        }
-    }
-
-    private class ArrowTouchListener implements View.OnTouchListener {
-        int requestCode;
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    break;
-                case MotionEvent.ACTION_UP:
-                    Intent intent;
-                    ACLArrow aclArrow = (ACLArrow)v;
-
-
-                    if (aclArrow.getIsJudge()) {
-                        intent = new Intent(MainActivity.this, ACLActivity.class);
-                        System.out.println("インバウンド");
-                        requestCode = 4000; // インバウンド用
-                    } else if (!aclArrow.getIsJudge()) {
-                        intent = new Intent(MainActivity.this, ACLActivity.class);
-                        System.out.println("アウトバウンド");
-                        requestCode = 5000; // アウトバウンド用
-                    } else {
-                        intent = null;
-                        requestCode = 0;
-                    }
-
-                    startActivityForResult(intent, requestCode);
-                    break;
-            }
-            return true;
-        }
-    }
-
-
 
     protected void startRoutingActivity() {
         Intent intent;
@@ -692,7 +418,7 @@ public class MainActivity extends AppCompatActivity {
                     // String enablePassword = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
                     if (intent.getBooleanExtra("Remove", false)) { // ルータの削除の処理(ラベルも消す)
                         routers.set(device.getID(), null);
-                        layout.removeView((View)device);
+                        layout.removeView((View) device);
                         layout.removeView(device.getHostname());
                     }
                     hostname = intent.getStringExtra("hostname");
@@ -704,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
                 case RESULT_LOGICALSWITCH: // スイッチの論理構成図
                     if (intent.getBooleanExtra("Remove", false)) { // スイッチの削除の処理(ラベルも消す)
                         switches.set(device.getID(), null);
-                        layout.removeView((View)device);
+                        layout.removeView((View) device);
                         layout.removeView(device.getHostname());
                     }
                     hostname = intent.getStringExtra("hostname");
@@ -716,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                 case RESULT_LOGICALHOST: // ホストの論理構成図
                     if (intent.getBooleanExtra("Remove", false)) { // ホストの削除の処理(ラベルも消す)
                         hosts.set(device.getID(), null);
-                        layout.removeView((View)device);
+                        layout.removeView((View) device);
                         layout.removeView(device.getHostname());
                     }
                     hostname = intent.getStringExtra("hostname");
@@ -733,8 +459,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static MainActivity getInstance() {
-        return instance;
+    public Device getTargetDevice() {
+        return targetDevice;
     }
 
     /**
@@ -744,8 +470,271 @@ public class MainActivity extends AppCompatActivity {
         targetDevice = device;
     }
 
-    public Device getTargetDevice() {
-        return targetDevice;
+    /**
+     * ネットワーク機器に対するイベントリスナーのメンバークラス
+     * 物理構成図と論理構成図で使用する予定
+     */
+    private class DeviceListener implements View.OnTouchListener {
+        private ConstraintLayout layout = findViewById(R.id.constraintlayout);
+        private PhysicalChangeListener physicalChangeListener = new PhysicalChangeListener();
+        private SetInformationListener setInformationListener = new SetInformationListener();
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (mode) {
+                case Physical: // 物理構成モードのときにネットワーク機器をタッチすると発生するイベント
+                    System.out.println("物理イベント発生");
+                    physicalChangeListener.onTouch(v, event);
+                    break;
+
+                case Logical: // 論理構成モードのときにネットワーク機器をタッチすると発生するイベント
+                    System.out.println("論理イベント発生");
+                    setInformationListener.onTouch(v, event);
+                    break;
+
+                default:
+                    break;
+            }
+            /**
+             * 戻り値をtrueにすることで親のLayoutのタッチイベントが発生しない
+             */
+            return true;
+        }
+    }
+
+    private class PhysicalChangeListener implements View.OnTouchListener {
+        private ConstraintLayout layout = findViewById(R.id.constraintlayout);
+        private boolean connecting = false; // 結線中
+
+
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    connecting = false;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    /**
+                     * タッチしたネットワーク機器の範囲外に出た時に結線中とする
+                     */
+                    if (event.getRawX() > ((Device) v).getCenterX() + 100 || event.getRawX() < ((Device) v).getCenterX() - 100 ||
+                            event.getRawY() > ((Device) v).getCenterY() + 100 || event.getRawY() < ((Device) v).getCenterY() - 100) {
+                        connecting = true;
+                        System.out.println("結線中");
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (connecting) {
+                        boolean find = false; // 対象のネットワーク機器を発見したかどうか
+                        Cable cable;
+                        for (Router router : routers) {
+                            if (router == null) {
+                                continue;
+                            } else if (router.getCenterX() - 100 < event.getRawX() && event.getRawX() < router.getCenterX() + 100 &&
+                                    router.getCenterY() - 100 < event.getRawY() && event.getRawY() < router.getCenterY() + 100) {
+                                cable = new Cable(context, ((Device) v).getCenterX(), ((Device) v).getCenterY(), router.getCenterX(), router.getCenterY(), cableNum++, (Device) v, (Device) router);
+                                cables.add(cable);
+                                layout.addView(cable);
+                                System.out.println("結線完了");
+                                find = true;
+                                break;
+                            }
+                        }
+                        if (!find) {
+                            for (Switch s : switches) {
+                                if (s == null) {
+                                    continue;
+                                } else if (s.getCenterX() - 100 < event.getRawX() && event.getRawX() < s.getCenterX() + 100 &&
+                                        s.getCenterY() - 100 < event.getRawY() && event.getRawY() < s.getCenterY() + 100) {
+                                    cable = new Cable(context, ((Device) v).getCenterX(), ((Device) v).getCenterY(), s.getCenterX(), s.getCenterY(), cableNum++, (Device) v, (Device) s);
+                                    cables.add(cable);
+                                    layout.addView(cable);
+                                    System.out.println("結線完了");
+                                    find = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!find) {
+                            for (Host host : hosts) {
+                                if (host == null) {
+                                    continue;
+                                } else if (host.getCenterX() - 100 < event.getRawX() && event.getRawX() < host.getCenterX() + 100 &&
+                                        host.getCenterY() - 100 < event.getRawY() && event.getRawY() < host.getCenterY() + 100) {
+                                    cable = new Cable(context, ((Device) v).getCenterX(), ((Device) v).getCenterY(), host.getCenterX(), host.getCenterY(), cableNum++, (Device) v, (Device) host);
+                                    cables.add(cable);
+                                    layout.addView(cable);
+                                    System.out.println("結線完了");
+                                    find = true;
+                                    break;
+                                }
+                            }
+                            if (!find) {
+                                System.out.println("結線失敗");
+                            }
+                        }
+
+                    } else {
+                        if (v.getClass() == Router.class) { // getClassでViewクラスではなく子クラスが取り出されることが分かった
+                            Router router = (Router) v;
+                            Switch s = new Switch(context, router.getCenterX(), router.getCenterY(), switchNum++);
+                            s.setLayoutParams(router.getLayoutParams());
+                            switches.add(s);
+                            s.setElevation(2);
+                            TextView hostname = s.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams) router.getHostname().getLayoutParams();
+                            l.topToBottom = s.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
+                            routers.set(((Router) v).getID(), null);
+                            s.setOnTouchListener(new DeviceListener());
+                            layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(router.getHostname()); // 前のラベルを削除
+                            layout.addView(s);
+                            layout.addView(hostname);
+                            System.out.println("スイッチに変更");
+                        } else if (v.getClass() == Switch.class) {
+                            Switch s = (Switch) v;
+                            Host host = new Host(context, s.getCenterX(), s.getCenterY(), hostNum++);
+                            host.setLayoutParams(s.getLayoutParams());
+                            hosts.add(host);
+                            host.setElevation(2);
+                            TextView hostname = host.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams) s.getHostname().getLayoutParams();
+                            l.topToBottom = host.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
+                            switches.set(((Switch) v).getID(), null);
+                            host.setOnTouchListener(new DeviceListener());
+                            layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(s.getHostname()); // 前のラベルを削除
+                            layout.addView(host);
+                            layout.addView(hostname);
+                            /**
+                             if (host.getID() == 0) {
+                             layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 1));
+                             } else {
+                             layout.addView(new VLAN(context, host.getCenterX(), host.getCenterY(), 10));
+                             }
+                             */
+
+                            System.out.println("ホストに変更");
+                        } else {
+                            Host host = (Host) v;
+                            Router router = new Router(context, host.getCenterX(), host.getCenterY(), routerNum++);
+                            router.setLayoutParams(host.getLayoutParams());
+                            routers.add(router);
+                            router.setElevation(2);
+                            TextView hostname = router.getHostname();
+                            ConstraintLayout.LayoutParams l = (ConstraintLayout.LayoutParams) host.getHostname().getLayoutParams();
+                            l.topToBottom = router.getId();
+                            hostname.setLayoutParams(l);
+                            hostname.setElevation(2);
+                            hosts.set(((Host) v).getID(), null);
+                            router.setOnTouchListener(new DeviceListener());
+                            layout.removeView(v); // タッチしたViewを削除する
+                            layout.removeView(host.getHostname()); // 前のラベルを削除
+                            layout.addView(router);
+                            layout.addView(hostname);
+                            System.out.println("ルータに変更");
+                        }
+
+                        System.out.println("Change");
+                    }
+                    break;
+
+                default:
+                    break;
+
+            }
+
+            return true;
+        }
+    }
+
+    // SubActivityの開始を決めるクラス
+    private class SetInformationListener implements View.OnTouchListener {
+        int requestCode;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Intent intent;
+                    if (v.getClass() == Router.class) {
+                        intent = new Intent(MainActivity.this, LogicalRouterActivity.class);
+                        Router router = (Router) v;
+                        intent.putExtra("hostname", router.getHostname().getText());
+                        intent.putExtra("ip_domain_lookup", router.getIp_domain_lookup());
+                        intent.putExtra("banner", router.getBanner());
+                        intent.putExtra("service_password", router.getService_password());
+                        intent.putExtra("ip_domain_name", router.getDomain_name());
+                        intent.putExtra("enable_secret", router.getEnable_secret());
+                        intent.putExtra("password", router.getPassword());
+                        intent.putExtra("logging", router.getLogging());
+                        requestCode = 1000;
+                        setTargetDevice((Device) v);
+                    } else if (v.getClass() == Switch.class) {
+                        intent = new Intent(MainActivity.this, LogicalSwitchActivity.class);
+                        intent.putExtra("hostname", ((Switch) v).getHostname().getText());
+                        requestCode = 2000;
+                        setTargetDevice((Device) v);
+                    } else if (v.getClass() == Host.class) {
+                        intent = new Intent(MainActivity.this, LogicalHostActivity.class);
+                        intent.putExtra("hostname", ((Host) v).getHostname().getText());
+                        requestCode = 3000;
+                        setTargetDevice((Device) v);
+                    } else {
+                        intent = null;
+                        requestCode = 0;
+                    }
+
+                    startActivityForResult(intent, requestCode);
+                    break;
+            }
+            return true;
+        }
+    }
+
+    private class ArrowTouchListener implements View.OnTouchListener {
+        int requestCode;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Intent intent;
+                    ACLArrow aclArrow = (ACLArrow) v;
+
+
+                    if (aclArrow.getIsJudge()) {
+                        intent = new Intent(MainActivity.this, ACLActivity.class);
+                        System.out.println("インバウンド");
+                        requestCode = 4000; // インバウンド用
+                    } else if (!aclArrow.getIsJudge()) {
+                        intent = new Intent(MainActivity.this, ACLActivity.class);
+                        System.out.println("アウトバウンド");
+                        requestCode = 5000; // アウトバウンド用
+                    } else {
+                        intent = null;
+                        requestCode = 0;
+                    }
+
+                    startActivityForResult(intent, requestCode);
+                    break;
+            }
+            return true;
+        }
     }
 
 }

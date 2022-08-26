@@ -3,31 +3,33 @@ package com.example.testapplication;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import androidx.core.util.Consumer;
 import android.util.Log;
-import android.view.View;
+
+import androidx.core.util.Consumer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 非同期通信HTTPリクエスト実行クラス<br />
  * <p>[使用方法]</p>
  * new HttpRequestor(
- *　 this,
- *　 "http://xxxx.xx",
- *　 "処理中メッセージ",
- *　 b -> {
- *　 // rはバイト配列のレスポンスデータ。
- *　 // 正常時の処理を記載。
- *　 },
- *　 e -> {
- *　 // eはエクセプション。
- *　 // エラー時の処理を記載。
- *　 }
+ * 　 this,
+ * 　 "http://xxxx.xx",
+ * 　 "処理中メッセージ",
+ * 　 b -> {
+ * 　 // rはバイト配列のレスポンスデータ。
+ * 　 // 正常時の処理を記載。
+ * 　 },
+ * 　 e -> {
+ * 　 // eはエクセプション。
+ * 　 // エラー時の処理を記載。
+ * 　 }
  * ).execute();
  */
 public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
@@ -48,10 +50,11 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
 
     /**
      * コンストラクタ
-     * @param context コンテキスト
-     * @param url 通信先URL
-     * @param message 処理中メッセージ
-     * @param callback 正常時のコールバック関数(Consumer<byte[]>)
+     *
+     * @param context       コンテキスト
+     * @param url           通信先URL
+     * @param message       処理中メッセージ
+     * @param callback      正常時のコールバック関数(Consumer<byte[]>)
      * @param errorCallback エラー時のコールバック関数(Consumer<Exception>)
      */
     public HttpRequestor(Context context, String url, String message, Consumer<byte[]> callback, Consumer<Exception> errorCallback) {
@@ -83,8 +86,17 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true); // Body の追加を許可
+            con.setRequestProperty("Content-Type", "application/xml; charset=UTF-8");
 
+            // header があれば追加する
 
+            // body
+            String str = "入れたいデータ";
+            str = dataString;
+            byte[] outputInBytes = str.getBytes(StandardCharsets.UTF_8);
+            OutputStream os = con.getOutputStream();
+            os.write(outputInBytes);
+            os.close();
 
             // 接続
             con.connect();
@@ -94,10 +106,10 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
             if (status == HttpURLConnection.HTTP_OK) {
                 final InputStream in = con.getInputStream();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                byte [] buffer = new byte[1024];
-                while(true) {
+                byte[] buffer = new byte[1024];
+                while (true) {
                     int len = in.read(buffer);
-                    if(len < 0) {
+                    if (len < 0) {
                         break;
                     }
                     out.write(buffer, 0, len);
@@ -106,6 +118,7 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
                 out.close();
                 return out.toByteArray();
             } else {
+                System.out.println("接続に失敗しました");
                 throw new IOException("HTTP status:" + status);
             }
         } catch (Exception e) {
