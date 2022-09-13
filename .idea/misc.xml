@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/drawable/button_default.xml" value="0.2555" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/drawable/button_disabled.xml" value="0.2545" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/drawable/button_pressed.xml" value="0.2535" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/drawable/button_state.xml" value="0.2545" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/button_default.xml" value="0.125" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/cable_router_activity.xml" value="0.264" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/cable_routerandswitch_activity.xml" value="0.125" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/cable_switch_activity.xml" value="0.125" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/logical_host_activity.xml" value="0.4" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/logical_router_activity.xml" value="0.2" />
+        <entry key="..\:/Users/h1103/AndroidStudioProjects/TestApplication/app/src/main/res/layout/logical_switch_activity.xml" value="0.264" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

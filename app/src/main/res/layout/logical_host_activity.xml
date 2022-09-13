@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,16 +11,26 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/remove"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onDeleteButtonClick"
-            android:text="@string/remove"/>
+            android:text="@string/remove"
+            android:textSize="34sp"
+            app:backgroundTint="#FF5722" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onOKButtonClick"
-            android:text="@string/ok"/>
+            android:text="@string/ok"
+            android:textSize="34sp"
+            app:backgroundTint="#4CAF50" />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -32,13 +42,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/router_line2"/>
+            android:text="@string/router_line2" />
 
         <EditText
             android:id="@+id/hostname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:inputType="text" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -50,46 +60,46 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ipaddress"/>
+            android:text="@string/ipaddress" />
 
         <EditText
             android:id="@+id/ipaddress1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -101,50 +111,50 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/subnet"/>
+            android:text="@string/subnet" />
 
         <EditText
             android:id="@+id/subnet1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="255"/>
+            android:text="255" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/subnet2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="255"/>
+            android:text="255" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/subnet3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="255"/>
+            android:text="255" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/subnet4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:text="0"/>
+            android:text="0" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>

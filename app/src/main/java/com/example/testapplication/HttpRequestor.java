@@ -43,9 +43,9 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
 
     // NETCONF_TestData
     private String dataString = "<config>" +
-            "    <native xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XE-native\">" +
-            "        <hostname>R1</hostname>" +
-            "    </native>" +
+            "<native xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XE-native\">" +
+            "<hostname>R1</hostname>" +
+            "</native>" +
             "</config>";
 
     /**

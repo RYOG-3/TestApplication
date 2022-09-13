@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("設定コマンドを発行します");
                 new HttpRequestor(
                         MainActivity.this, // コンテキスト
-                        "http://172.27.4.14:10000/", // 接続先URL テスト環境では自分のパソコンのIPアドレス
+                        "http://172.16.0.48:10000/", // 接続先URL テスト環境では自分のパソコンのIPアドレス
                         "発行中...", // 通信中に砂時計に表示するメッセージ
                         b -> {
                             // 通信成功時のコールバック処理。bはレスポンスのbyte配列。

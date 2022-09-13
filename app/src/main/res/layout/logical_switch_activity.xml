@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="LogicalRouterActivity">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,16 +17,26 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/remove"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:onClick="onDeleteButtonClick"
-                android:text="@string/remove"/>
+                android:text="@string/remove"
+                android:textSize="34sp"
+                app:backgroundTint="#FF5722" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:onClick="onOKButtonClick"
-                android:text="@string/ok"/>
+                android:text="@string/ok"
+                android:textSize="34sp"
+                app:backgroundTint="#4CAF50" />
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -39,13 +48,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line2"/>
+                android:text="@string/router_line2" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/hostname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -57,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/router_line3"/>
+                android:text="@string/router_line3" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -67,11 +80,12 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable"/>
+                    android:text="@string/enable" />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable"/>
+                    android:text="@string/disable" />
 
             </RadioGroup>
 
@@ -85,18 +99,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line4"/>
+                android:text="@string/router_line4" />
 
             <EditText
                 android:id="@+id/banner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#"/>
+                android:text="#" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -109,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/router_line5"/>
+                android:text="@string/router_line5" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -119,11 +133,12 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable"/>
+                    android:text="@string/enable" />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable"/>
+                    android:text="@string/disable" />
 
             </RadioGroup>
 
@@ -137,13 +152,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line6"/>
+                android:text="@string/router_line6" />
 
             <EditText
                 android:id="@+id/domain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -155,20 +170,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line7"/>
+                android:text="@string/router_line7" />
 
             <EditText
                 android:id="@+id/enable_secret"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/router_line8"/>
+            android:text="@string/router_line8" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -178,13 +193,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line9"/>
+                android:text="@string/router_line9" />
 
             <EditText
                 android:id="@+id/console_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
