@@ -35,14 +35,15 @@ import java.nio.charset.StandardCharsets;
 public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
     private Context context = null;
     private String url = null;
-    private String message = null;
+    private String process_message = null;
+    private String send_message = null;
     private Consumer<byte[]> callback = null;
     private Consumer<Exception> errorCallback = null;
     private Exception exception = null;
     private ProgressDialog progressDialog = null;
 
     // NETCONF_TestData
-    private String dataString = "<config>" +
+    private String jsonData = "<config>" +
             "<native xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XE-native\">" +
             "<hostname>R1</hostname>" +
             "</native>" +
@@ -51,16 +52,18 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
     /**
      * コンストラクタ
      *
-     * @param context       コンテキスト
-     * @param url           通信先URL
-     * @param message       処理中メッセージ
-     * @param callback      正常時のコールバック関数(Consumer<byte[]>)
-     * @param errorCallback エラー時のコールバック関数(Consumer<Exception>)
+     * @param context         コンテキスト
+     * @param url             通信先URL
+     * @param process_message 処理中メッセージ
+     * @param send_message    送信メッセージ
+     * @param callback        正常時のコールバック関数(Consumer<byte[]>)
+     * @param errorCallback   エラー時のコールバック関数(Consumer<Exception>)
      */
-    public HttpRequestor(Context context, String url, String message, Consumer<byte[]> callback, Consumer<Exception> errorCallback) {
+    public HttpRequestor(Context context, String url, String process_message, String send_message, Consumer<byte[]> callback, Consumer<Exception> errorCallback) {
         this.context = context;
         this.url = url;
-        this.message = message;
+        this.process_message = process_message;
+        this.send_message = send_message;
         this.callback = callback;
         this.errorCallback = errorCallback;
     }
@@ -70,7 +73,7 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
         // 砂時計表示
         this.progressDialog = new ProgressDialog(context);
         this.progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        this.progressDialog.setMessage(this.message);
+        this.progressDialog.setMessage(this.process_message);
         progressDialog.setCancelable(false);
         this.progressDialog.show();
 
@@ -86,13 +89,13 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true); // Body の追加を許可
-            con.setRequestProperty("Content-Type", "application/xml; charset=UTF-8");
+            con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
 
             // header があれば追加する
 
             // body
             String str = "入れたいデータ";
-            str = dataString;
+            str = send_message;
             byte[] outputInBytes = str.getBytes(StandardCharsets.UTF_8);
             OutputStream os = con.getOutputStream();
             os.write(outputInBytes);

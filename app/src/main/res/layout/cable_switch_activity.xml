@@ -34,13 +34,13 @@
             <Spinner
                 android:id="@+id/interface_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:entries="@array/interface_name" />
 
             <Spinner
                 android:id="@+id/port_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:entries="@array/port_name" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -57,24 +57,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_line2" />
+                android:text="@string/switch_line2"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/vlan_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_line3" />
+                android:text="@string/switch_line3"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/vlan_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="34sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -84,12 +88,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/access" />
+                    android:text="@string/access"
+                    android:textSize="34sp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trunk" />
+                    android:text="@string/trunk"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
@@ -103,46 +109,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ipaddress" />
+                android:text="@string/ipaddress"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -154,46 +168,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subnet" />
+                android:text="@string/subnet"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -206,7 +228,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/shutdown" />
+                android:text="@string/shutdown"
+                android:textSize="34sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -216,12 +239,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable" />
+                    android:text="@string/enable"
+                    android:textSize="34sp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable" />
+                    android:text="@string/disable"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
@@ -239,13 +264,13 @@
             <Spinner
                 android:id="@+id/interface_name2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:entries="@array/interface_name" />
 
             <Spinner
                 android:id="@+id/port_name2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48sp"
                 android:entries="@array/port_name" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -262,24 +287,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_line2" />
+                android:text="@string/switch_line2"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/vlan_number2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/switch_line3" />
+                android:text="@string/switch_line3"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/vlan_name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="34sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -289,12 +318,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/access" />
+                    android:text="@string/access"
+                    android:textSize="34sp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trunk" />
+                    android:text="@string/trunk"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
@@ -308,46 +339,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ipaddress" />
+                android:text="@string/ipaddress"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/ipaddress4_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -359,46 +398,54 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subnet" />
+                android:text="@string/subnet"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." />
+                android:text="."
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/subnet4_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -411,7 +458,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="@string/shutdown" />
+                android:text="@string/shutdown"
+                android:textSize="34sp" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -421,12 +469,14 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable" />
+                    android:text="@string/enable"
+                    android:textSize="34sp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable" />
+                    android:text="@string/disable"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 

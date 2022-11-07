@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Physical;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Logical;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Routing;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
@@ -114,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.ACL;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
@@ -131,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mode = Mode.Memo;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
@@ -143,21 +148,25 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 発行ボタンのリスナー設定
          */
-        Button issue = findViewById(R.id.issue);
-        issue.setOnClickListener(new View.OnClickListener() {
+        Button issue_bt = findViewById(R.id.issue);
+        issue_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mode = Mode.Issue;
+                changeButtonState();
                 routingCircle.routingInvalidate();
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
                     arrow.setVisibility(View.INVISIBLE);
                 }
                 System.out.println("設定コマンドを発行します");
+                CreateJSONData createJSONData = new CreateJSONData(context);
+                createJSONData.setData();
                 new HttpRequestor(
                         MainActivity.this, // コンテキスト
-                        "http://172.16.0.48:10000/", // 接続先URL テスト環境では自分のパソコンのIPアドレス
+                        "http://10.0.2.2:10000/", // 接続先URL テスト環境ではエミュレータからローカルマシンにブリッジするIPアドレス
                         "発行中...", // 通信中に砂時計に表示するメッセージ
+                        createJSONData.getJson(), // 送信するJSONデータ
                         b -> {
                             // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
                             System.out.println(new String(b));
@@ -468,6 +477,66 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setTargetDevice(Device device) {
         targetDevice = device;
+    }
+
+    private void changeButtonState() {
+        Button physical_bt = findViewById(R.id.physical);
+        Button logical_bt = findViewById(R.id.logical);
+        Button routing_bt = findViewById(R.id.routing);
+        Button acl_bt = findViewById(R.id.acl);
+        Button memo_bt = findViewById(R.id.memo);
+        Button issue_bt = findViewById(R.id.issue);
+
+        switch (mode) {
+            case Physical:
+                physical_bt.setEnabled(false);
+                logical_bt.setEnabled(true);
+                routing_bt.setEnabled(true);
+                acl_bt.setEnabled(true);
+                memo_bt.setEnabled(true);
+                issue_bt.setEnabled(true);
+                break;
+            case Logical:
+                physical_bt.setEnabled(true);
+                logical_bt.setEnabled(false);
+                routing_bt.setEnabled(true);
+                acl_bt.setEnabled(true);
+                memo_bt.setEnabled(true);
+                issue_bt.setEnabled(true);
+                break;
+            case Routing:
+                physical_bt.setEnabled(true);
+                logical_bt.setEnabled(true);
+                routing_bt.setEnabled(false);
+                acl_bt.setEnabled(true);
+                memo_bt.setEnabled(true);
+                issue_bt.setEnabled(true);
+                break;
+            case ACL:
+                physical_bt.setEnabled(true);
+                logical_bt.setEnabled(true);
+                routing_bt.setEnabled(true);
+                acl_bt.setEnabled(false);
+                memo_bt.setEnabled(true);
+                issue_bt.setEnabled(true);
+                break;
+            case Memo:
+                physical_bt.setEnabled(true);
+                logical_bt.setEnabled(true);
+                routing_bt.setEnabled(true);
+                acl_bt.setEnabled(true);
+                memo_bt.setEnabled(false);
+                issue_bt.setEnabled(true);
+                break;
+            case Issue:
+                physical_bt.setEnabled(true);
+                logical_bt.setEnabled(true);
+                routing_bt.setEnabled(true);
+                acl_bt.setEnabled(true);
+                memo_bt.setEnabled(true);
+                issue_bt.setEnabled(false);
+                break;
+        }
     }
 
     /**

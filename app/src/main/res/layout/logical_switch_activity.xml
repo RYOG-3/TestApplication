@@ -42,50 +42,56 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line2" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="@string/router_line2"
+                android:textColor="@color/black"
+                android:textSize="48sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/hostname"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:textSize="34sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/router_line3" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="@string/router_line3"
+                android:textSize="34sp" />
 
             <RadioGroup
+                android:id="@+id/ip_domain_lookup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/enable" />
+                    android:layout_height="match_parent"
+                    android:text="@string/enable"
+                    android:textSize="34sp" />
 
                 <RadioButton
+                    android:id="@+id/disable1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/disable" />
+                    android:layout_height="match_parent"
+                    android:text="@string/disable"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
@@ -93,52 +99,60 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line4" />
+                android:text="@string/router_line4"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/banner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#" />
+                android:text="#"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/router_line5" />
+                android:layout_marginTop="5dp"
+                android:text="@string/router_line5"
+                android:textSize="34sp" />
 
             <RadioGroup
+                android:id="@+id/encryption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable" />
+                    android:text="@string/enable"
+                    android:textSize="34sp" />
 
                 <RadioButton
+                    android:id="@+id/disable2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable" />
+                    android:text="@string/disable"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
@@ -146,304 +160,101 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line6" />
+                android:text="@string/router_line6"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/domain"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="text" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line7" />
+                android:text="@string/router_line7"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/enable_secret"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/router_line8" />
+            android:layout_height="75dp"
+            android:text="@string/router_line8"
+            android:textSize="34sp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/router_line9" />
+                android:text="@string/router_line9"
+                android:textSize="34sp" />
 
             <EditText
                 android:id="@+id/console_password"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:inputType="textPassword" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/router_line10" />
+                android:layout_marginTop="5dp"
+                android:text="@string/router_line10"
+                android:textSize="34sp" />
 
             <RadioGroup
+                android:id="@+id/logging"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/enable3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enable" />
+                    android:text="@string/enable"
+                    android:textSize="34sp" />
 
                 <RadioButton
+                    android:id="@+id/disable3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable" />
+                    android:text="@string/disable"
+                    android:textSize="34sp" />
 
             </RadioGroup>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        <!--
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/interface_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/interface_name"/>
-
-            <Spinner
-                android:id="@+id/port_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/port_name"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/switch_line2"/>
-
-            <EditText
-                android:id="@+id/vlan_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/switch_line3"/>
-
-            <EditText
-                android:id="@+id/vlan_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/access" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/trunk" />
-
-            </RadioGroup>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ipaddress"/>
-
-            <EditText
-                android:id="@+id/ipaddress1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/ipaddress2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/ipaddress3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/ipaddress4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subnet"/>
-
-            <EditText
-                android:id="@+id/subnet1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/subnet2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/subnet3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."/>
-
-            <EditText
-                android:id="@+id/subnet4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="@string/shutdown"/>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/enable" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/disable"/>
-
-            </RadioGroup>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/vlan_add"/>
-            -->
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,38 @@
+{
+  "Routers": [
+    {
+      "hostname": "",
+      "ip_domain_lookup": false,
+      "banner_motd": "",
+      "service_password-encryption": false,
+      "ip_domain-name": "",
+      "enable_secret": "",
+      "line_console_password": "",
+      "logging_synchronous": false,
+      "ipv4": 0,
+      "subnet_mask": 0,
+      "ipv6": 0,
+      "prefix": 0,
+      "description": ""
+    }
+  ],
+  "Switches": [
+    {
+      "hostname": "",
+      "ip_domain_lookup": false,
+      "banner_motd": "",
+      "service_password-encryption": false,
+      "ip_domain-name": "",
+      "enable_secret": "",
+      "line_console_password": "",
+      "logging_synchronous": false
+    }
+  ],
+  "Hosts": [
+    {
+      "hostname": "",
+      "ipv4": 0,
+      "subnet_mask": 0
+    }
+  ]
+}
