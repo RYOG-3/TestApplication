@@ -13,7 +13,10 @@
 この機能を用いることで, ネットワークエンジニアがネットワークを構築する際の作業負担を軽減することが期待できる.
 
 ## システム構成図
+![System Diagram drawio](https://user-images.githubusercontent.com/65248588/213059164-e06ac083-c6eb-4ac2-a00c-39f88c07bf27.png)
 
 
 
 ## デモ動画
+https://user-images.githubusercontent.com/65248588/213059242-00054cc0-bb54-4dfc-bb37-d9b9d461965b.mp4
+
