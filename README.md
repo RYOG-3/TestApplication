@@ -13,8 +13,15 @@
 この機能を用いることで, ネットワークエンジニアがネットワークを構築する際の作業負担を軽減することが期待できる.
 
 ## システム構成図
-![System Diagram drawio](https://user-images.githubusercontent.com/65248588/213059164-e06ac083-c6eb-4ac2-a00c-39f88c07bf27.png)
+システム構成図を以下に示す. 本システムは, タブレットと管理サーバ, 対象のネットワーク機器から構成する. 
+タブレットは開発したAndroidアプリを操作するために利用する. Androidアプリはネットワーク構成図描画機能, メモ機能, そして設定情報反映機能が搭載されている.
+タッチやスワイプでGUIを操作し, 機能を利用する. 管理サーバはタブレットとHTTP通信してJSONデータを受け取り, 保存する.
+その後NETCONFを用いて, 対象のネットワーク機器に設定データを送信する.
+NETCONF は, IETF (Internet Engineering Task Force) において標準化が進められている, ネットワーク機器を制御するためのプロトコルである.
+このプロトコルを用いて送信されたデータをネットワーク機器が受け取り，自動で機能設定する.
 
+
+![System Diagram drawio](https://user-images.githubusercontent.com/65248588/213059164-e06ac083-c6eb-4ac2-a00c-39f88c07bf27.png)
 
 
 ## デモ動画
