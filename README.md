@@ -25,5 +25,13 @@ NETCONF は, IETF (Internet Engineering Task Force) において標準化が進�
 
 
 ## デモ動画
+PC上で動作させたタブレット用Androidエミュレータでのデモ動画
+
+### ネットワーク機器の配置と結線
+https://user-images.githubusercontent.com/65248588/213067377-36ddc10a-c06e-4e04-a0ec-9bb71107f524.mp4
+
+
+
+
 https://user-images.githubusercontent.com/65248588/213059242-00054cc0-bb54-4dfc-bb37-d9b9d461965b.mp4
 
