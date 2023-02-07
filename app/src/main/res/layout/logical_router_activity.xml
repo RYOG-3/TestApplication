@@ -70,7 +70,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:text="@string/router_line3"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/ip_domain_lookup"
@@ -105,19 +107,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/router_line4"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/banner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -131,7 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/router_line5"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/encryption"
@@ -166,13 +175,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/router_line6"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/domain"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -185,13 +197,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/router_line7"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/enable_secret"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -199,7 +214,9 @@
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:text="@string/router_line8"
-            android:textSize="34sp" />
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -210,13 +227,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/router_line9"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/console_password"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="34sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -230,7 +250,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/router_line10"
-                android:textSize="34sp" />
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/logging"

@@ -1,13 +1,11 @@
 package com.example.testapplication;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +17,7 @@ import java.util.List;
 
 /**
  * ルーティング図で使用するルータに対して円を囲むための描画と対象のルータを判定するためのクラス
- * 全てのパターンのコンストラクタを追加しておくとエラーが発生しない(なぜかは勉強していない...)
+ * View を継承するとき全てのパターンのコンストラクタを追加しておくとエラーが発生しない
  */
 public class RoutingCircle extends View {
     // 履歴
@@ -32,22 +30,7 @@ public class RoutingCircle extends View {
     private float start_X = 0;
     private float start_Y = 0;
 
-    private boolean judge = false; // タッチイベントの判定
-
-    // 線の履歴(座標＋色)
-    protected class RoutingDrawLine {
-        private Paint paint;
-        private Path path;
-
-        RoutingDrawLine(Path path, Paint paint) {
-            this.paint = new Paint(paint);
-            this.path = new Path(path);
-        }
-
-        void draw(Canvas canvas) {
-            canvas.drawPath(this.path, this.paint);
-        }
-    }
+    private int lineID = -1;
 
     public RoutingCircle(Context context) {
         super(context);
@@ -102,9 +85,9 @@ public class RoutingCircle extends View {
         float y = event.getY();
 
         if (MainActivity.mode == Mode.Routing) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN && (judge = onTouch(x, y))) { // 円をタッチしたらアクティビティを開始
-                MainActivity.getInstance().startRoutingActivity();
-            } else if (!judge) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN && (lineID = onTouch(x, y)) != -1) {
+                MainActivity.getInstance().startRoutingActivity(lineID);
+            } else if (lineID == -1) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         start_X = x;
@@ -112,27 +95,45 @@ public class RoutingCircle extends View {
                         this.path.moveTo(x, y);
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        this.path.lineTo(x, y);
+                        if ((x > start_X + 10 || start_X - 10 > x) && (y > start_Y + 10 || start_Y - 10 > y)) {
+                            this.path.lineTo(x, y);
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
-                        this.path.lineTo(start_X, start_Y);
-                        // 指を離したので、履歴に追加して、判定を行う
-                        this.lines.add(new RoutingDrawLine(this.path, this.paint));
-                        routerInCircle(this.path);
-                        // パスをリセットする
-                        // これを忘れると、全ての線の色が変わってしまう
+                        if ((x > start_X + 10 || start_X - 10 > x) && (y > start_Y + 10 || start_Y - 10 > y)) {
+                            this.path.lineTo(start_X, start_Y);
+                            // 指を離したので、履歴に追加して、判定を行う
+                            this.lines.add(new RoutingDrawLine(lines.size(), this.path, this.paint));
+                            routerInCircle(this.path);
+                            // パスをリセットする
+                            // これを忘れると、全ての線の色が変わってしまう
+                        }
                         this.path.reset();
-                        judge = false;
-
                         break;
                 }
-                invalidate();
             }
+            invalidate();
 
             return true;
         } else {
             return false;
         }
+    }
+
+    /**
+     * 削除ボタンが押されたときに円を削除するメソッド
+     * 履歴の lines から対象の円を削除する
+     */
+    public void removeLine(int targetID) {
+        for (RoutingDrawLine line : this.lines) {
+            if (line.getLineID() == targetID) {
+                lines.remove(line);
+                System.out.println("円が削除されました");
+                break;
+            }
+        }
+        System.out.println("円は削除されませんでした");
+        invalidate();
     }
 
     public Paint getPaint() {
@@ -182,7 +183,7 @@ public class RoutingCircle extends View {
             if (judge[0] && judge[1] && judge[2] && judge[3]) {
                 routingRouterNum++;
             }
-            for (int j=0; j<=3; j++) {
+            for (int j = 0; j <= 3; j++) {
                 judge[j] = false;
             }
             System.out.println(aCoordinate[0]);
@@ -200,10 +201,11 @@ public class RoutingCircle extends View {
 
     /**
      * 円がタッチされたかを判断するメソッド
+     *
      * @param x,y x座標とy座標
      */
-    protected boolean onTouch(float x, float y) {
-        boolean judge = false;
+    protected int onTouch(float x, float y) {
+        int judge = -1;
         float aCoordinate[] = {0f, 0f}; // 必要な座標を取得するための配列を用意
 
         for (RoutingDrawLine line : lines) {
@@ -212,10 +214,10 @@ public class RoutingCircle extends View {
                 PathMeasure pm = new PathMeasure(line.path, true); // Pathを測定するクラスを用意
                 pm.getPosTan(pm.getLength() * split, aCoordinate, null);
 
-                System.out.println(aCoordinate[0]-x);
-                System.out.println(aCoordinate[1]-y);
-                if (Math.abs(aCoordinate[0]-x) < 10.0f && Math.abs(aCoordinate[1]-y) < 10.0f) {
-                    judge = true;
+                System.out.println(aCoordinate[0] - x);
+                System.out.println(aCoordinate[1] - y);
+                if (Math.abs(aCoordinate[0] - x) < 10.0f && Math.abs(aCoordinate[1] - y) < 10.0f) {
+                    judge = line.getLineID();
                     System.out.println("円がタッチされました");
                     break;
                 } else {
@@ -227,5 +229,26 @@ public class RoutingCircle extends View {
         }
 
         return judge;
+    }
+
+    // 線の履歴(座標＋色)
+    protected class RoutingDrawLine {
+        private int lineID;
+        private Paint paint;
+        private Path path;
+
+        RoutingDrawLine(int lineID, Path path, Paint paint) {
+            this.lineID = lineID;
+            this.paint = new Paint(paint);
+            this.path = new Path(path);
+        }
+
+        int getLineID() {
+            return lineID;
+        }
+
+        void draw(Canvas canvas) {
+            canvas.drawPath(this.path, this.paint);
+        }
     }
 }

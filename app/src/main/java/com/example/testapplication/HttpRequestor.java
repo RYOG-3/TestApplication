@@ -42,13 +42,7 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
     private Exception exception = null;
     private ProgressDialog progressDialog = null;
 
-    // NETCONF_TestData
-    private String jsonData = "<config>" +
-            "<native xmlns=\"http://cisco.com/ns/yang/Cisco-IOS-XE-native\">" +
-            "<hostname>R1</hostname>" +
-            "</native>" +
-            "</config>";
-
+    
     /**
      * コンストラクタ
      *

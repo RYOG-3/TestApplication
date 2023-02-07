@@ -1,5 +1,6 @@
 package com.example.testapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,6 +14,14 @@ public class ACLActivity extends AppCompatActivity {
     }
 
     public void onOKButtonClick(View view) {
+        finish();
+    }
+
+    // 削除ボタンをクリックするとアクティビティが終了し, 矢印が削除される
+    public void onDeleteButtonClick(View view) {
+        Intent intentSub = new Intent();
+        intentSub.putExtra("Remove", true);
+        setResult(RESULT_OK, intentSub);
         finish();
     }
 }

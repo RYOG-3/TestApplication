@@ -53,16 +53,29 @@ public class CreateJSONData {
         try {
             System.out.println(jsonObject);
             JSONArray array = jsonObject.getJSONArray("Routers");
-            for (int i = 0; i < array.length(); i++) {
+            for (int i = 0; i < array.length(); i++) { // JSONArray オブジェクトは拡張for文は使えない
                 array.getJSONObject(i).put("hostname", MainActivity.routers.get(i).getHostname().getText());
                 array.getJSONObject(i).put("ip_domain_lookup", MainActivity.routers.get(i).getIp_domain_lookup());
+                array.getJSONObject(i).put("banner_motd", MainActivity.routers.get(i).getBanner());
+                array.getJSONObject(i).put("service_password-encryption", MainActivity.routers.get(i).getService_password());
+                array.getJSONObject(i).put("ip_domain-name", MainActivity.routers.get(i).getDomain_name());
+                array.getJSONObject(i).put("enable_secret", MainActivity.routers.get(i).getEnable_secret());
+                array.getJSONObject(i).put("line_console_password", MainActivity.routers.get(i).getPassword());
+                array.getJSONObject(i).put("logging_synchronous", MainActivity.routers.get(i).getLogging());
             }
             System.out.println(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("何も配置されていません");
         }
     }
 
+    /**
+     * 作成したJSONの文字列を返すゲッター
+     *
+     * @return JSONの文字列データ
+     */
     public String getJson() {
         return jsonObject.toString();
     }

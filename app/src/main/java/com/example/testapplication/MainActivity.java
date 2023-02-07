@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private final int RESULT_LOGICALSWITCH = 2000;
     private final int RESULT_LOGICALHOST = 3000;
     private final int RESULT_ROUTINGACTIVITY = 4000;
-    private final int RESULT_ACLACTIVITY = 5000;
+    private final int RESULT_PINKACLACTIVITY = 5000;
+    private final int RESULT_BLUEACLACTIVITY = 6000;
     private int routerNum = 0, switchNum = 0, hostNum = 0; // それぞれのネットワーク機器台数
     private int cableNum = 0; // 結線したケーブルの数
     private int arrowNum = 0; // 矢印の数
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private RoutingCircle routingCircle; // ルーティング図で使う描画用クラス
     private Memo memo; // メモ機能で使う描画用クラス
     private Device targetDevice; // サブアクティビティを開始した時にどのネットワーク機器を対象にしているかを示す変数
+    private ACLArrow targetArrow; // サブアクティビティを開始したときにどの矢印を対象にしているかを示す変数
+    private int targetLine; // サブアクティビティを開始したときにどの円を対象にしているかを示す変数
     private Context context = this;
 
     public static MainActivity getInstance() {
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mode = Mode.Routing;
                 changeButtonState();
-                routingCircle.routingInvalidate();
+                routingCircle.routingInvalidate(); // onDraw() が呼び出される
                 memo.memoInvalidate();
                 for (ACLArrow arrow : arrows) {
                     arrow.setVisibility(View.INVISIBLE);
@@ -376,10 +379,11 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    protected void startRoutingActivity() {
+    protected void startRoutingActivity(int targetLine) {
+        this.targetLine = targetLine;
         Intent intent;
         intent = new Intent(MainActivity.this, RoutingActivity.class);
-        int requestCode = 6000;
+        int requestCode = 4000;
         startActivityForResult(intent, requestCode);
     }
 
@@ -417,11 +421,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         ConstraintLayout layout = findViewById(R.id.constraintlayout);
+        System.out.println(requestCode);
 
         if (resultCode == RESULT_OK && intent != null) {
             // ここから遷移先からのデータを受け取る
             String hostname;
             Device device = getTargetDevice();
+
             switch (requestCode) {
                 case RESULT_LOGICALROUTER: // ルータの論理構成図
                     // String enablePassword = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
@@ -429,12 +435,22 @@ public class MainActivity extends AppCompatActivity {
                         routers.set(device.getID(), null);
                         layout.removeView((View) device);
                         layout.removeView(device.getHostname());
+                    } else {
+                        hostname = intent.getStringExtra("hostname");
+
+                        Router router = (Router) device;
+                        if (hostname != null) {
+                            router.getHostname().setText(hostname);
+                        }
+                        router.setIp_domain_lookup(intent.getBooleanExtra("ip_domain_lookup", false));
+                        router.setBanner(intent.getStringExtra("banner"));
+                        router.setService_password(intent.getBooleanExtra("encryption", false));
+                        router.setDomain_name(intent.getStringExtra("domain"));
+                        router.setEnable_secret(intent.getStringExtra("enable_secret"));
+                        router.setPassword(intent.getStringExtra("console_password"));
+                        router.setLogging(intent.getBooleanExtra("logging", false));
+                        System.out.println(hostname);
                     }
-                    hostname = intent.getStringExtra("hostname");
-                    if (hostname != null) {
-                        device.getHostname().setText(hostname);
-                    }
-                    System.out.println(hostname);
                     break;
                 case RESULT_LOGICALSWITCH: // スイッチの論理構成図
                     if (intent.getBooleanExtra("Remove", false)) { // スイッチの削除の処理(ラベルも消す)
@@ -461,8 +477,19 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(hostname);
                     break;
                 case RESULT_ROUTINGACTIVITY: // ルーティング図のアクティビティ
+                    if (intent.getBooleanExtra("Remove", false)) { // 囲われた円を削除する
+                        routingCircle.removeLine(this.targetLine);
+                    } else { // OKボタンが押されたとき
+
+                    }
                     break;
-                case RESULT_ACLACTIVITY: // ACL図のアクティビティ
+                case RESULT_PINKACLACTIVITY: // ACL図のアクティビティ
+                case RESULT_BLUEACLACTIVITY:
+                    if (intent.getBooleanExtra("Remove", false)) { // 矢印を削除する
+                        arrows.remove(this.targetArrow);
+                        layout.removeView(this.targetArrow);
+                        System.out.println("矢印が削除されました");
+                    }
                     break;
             }
         }
@@ -789,11 +816,13 @@ public class MainActivity extends AppCompatActivity {
                     if (aclArrow.getIsJudge()) {
                         intent = new Intent(MainActivity.this, ACLActivity.class);
                         System.out.println("インバウンド");
-                        requestCode = 4000; // インバウンド用
+                        requestCode = 5000; // インバウンド用
+                        targetArrow = (ACLArrow) v;
                     } else if (!aclArrow.getIsJudge()) {
                         intent = new Intent(MainActivity.this, ACLActivity.class);
                         System.out.println("アウトバウンド");
-                        requestCode = 5000; // アウトバウンド用
+                        requestCode = 6000; // アウトバウンド用
+                        targetArrow = (ACLArrow) v;
                     } else {
                         intent = null;
                         requestCode = 0;

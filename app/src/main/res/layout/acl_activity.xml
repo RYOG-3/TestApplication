@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,13 +12,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/remove"/>
+            android:onClick="onDeleteButtonClick"
+            android:text="@string/remove" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onOKButtonClick"
-            android:text="@string/ok"/>
+            android:text="@string/ok" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/accessList"/>
+            android:text="@string/accessList" />
 
         <EditText
             android:id="@+id/accessListNum"
@@ -51,95 +51,95 @@
             android:id="@+id/access_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/access_type"/>
+            android:entries="@array/access_type" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ipaddress"/>
+            android:text="@string/ipaddress" />
 
         <EditText
             android:id="@+id/ipaddress1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/wildcard"/>
+            android:text="@string/wildcard" />
 
         <EditText
             android:id="@+id/wildcard1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -151,7 +151,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/accessList"/>
+            android:text="@string/accessList" />
 
         <EditText
             android:id="@+id/accessListNum2"
@@ -171,117 +171,117 @@
             android:id="@+id/access_type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/access_type"/>
+            android:entries="@array/access_type" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ipaddress"/>
+            android:text="@string/ipaddress" />
 
         <EditText
             android:id="@+id/ipaddress1_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress2_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress3_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/ipaddress4_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/wildcard"/>
+            android:text="@string/wildcard" />
 
         <EditText
             android:id="@+id/wildcard1_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard2_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard3_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="."/>
+            android:text="." />
 
         <EditText
             android:id="@+id/wildcard4_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-<!--
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
+    <!--
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onMinusButtonClick"
-            android:text="@string/minus"/>
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onPlusButtonClick"
-            android:text="@string/plus"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onMinusButtonClick"
+                android:text="@string/minus"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
--->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onPlusButtonClick"
+                android:text="@string/plus"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    -->
 
 </LinearLayout>
