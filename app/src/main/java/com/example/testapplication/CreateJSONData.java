@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * 送信するJSONデータを作成するクラス
@@ -49,25 +50,36 @@ public class CreateJSONData {
     /**
      * 設定したデータを全てJSONとして書き込む
      */
-    public void setData() {
+    public boolean setData() {
         try {
             System.out.println(jsonObject);
             JSONArray array = jsonObject.getJSONArray("Routers");
-            for (int i = 0; i < array.length(); i++) { // JSONArray オブジェクトは拡張for文は使えない
-                array.getJSONObject(i).put("hostname", MainActivity.routers.get(i).getHostname().getText());
-                array.getJSONObject(i).put("ip_domain_lookup", MainActivity.routers.get(i).getIp_domain_lookup());
-                array.getJSONObject(i).put("banner_motd", MainActivity.routers.get(i).getBanner());
-                array.getJSONObject(i).put("service_password-encryption", MainActivity.routers.get(i).getService_password());
-                array.getJSONObject(i).put("ip_domain-name", MainActivity.routers.get(i).getDomain_name());
-                array.getJSONObject(i).put("enable_secret", MainActivity.routers.get(i).getEnable_secret());
-                array.getJSONObject(i).put("line_console_password", MainActivity.routers.get(i).getPassword());
-                array.getJSONObject(i).put("logging_synchronous", MainActivity.routers.get(i).getLogging());
+            ArrayList<Router> routers = MainActivity.getAvailableRouters();
+            for (int i = 0; i < routers.size(); i++) { // JSONArray オブジェクトは拡張for文は使えない
+                if (routers.get(i) != null) {
+                    System.out.println("TEST" + i);
+                    array.getJSONObject(i).put("hostname", routers.get(i).getHostname().getText());
+                    array.getJSONObject(i).put("ip_domain_lookup", routers.get(i).getIp_domain_lookup());
+                    array.getJSONObject(i).put("banner_motd", routers.get(i).getBanner());
+                    array.getJSONObject(i).put("service_password-encryption", routers.get(i).getService_password());
+                    array.getJSONObject(i).put("ip_domain-name", routers.get(i).getDomain_name());
+                    array.getJSONObject(i).put("enable_secret", routers.get(i).getEnable_secret());
+                    array.getJSONObject(i).put("line_console_password", routers.get(i).getPassword());
+                    array.getJSONObject(i).put("logging_synchronous", routers.get(i).getLogging());
+                    System.out.println("END" + i);
+                }
+                if (i != routers.size() - 1) { // JSONデータを追加する
+                    addConfigList(jsonObject);
+                }
             }
             System.out.println(jsonObject);
+            return true;
         } catch (JSONException e) {
             e.printStackTrace();
+            return false;
         } catch (Exception e) {
             System.out.println("何も配置されていません");
+            return false;
         }
     }
 
@@ -80,4 +92,26 @@ public class CreateJSONData {
         return jsonObject.toString();
     }
 
+    public void addConfigList(JSONObject jsonObject) {
+        try {
+            JSONObject json = new JSONObject("{" +
+                    "\"hostname\": \"\"," +
+                    "\"ip_domain_lookup\": false," +
+                    "\"banner_motd\": \"\"," +
+                    "\"service_password-encryption\": false," +
+                    "\"ip_domain-name\": \"\"," +
+                    "\"enable_secret\": \"\"," +
+                    "\"line_console_password\": \"\"," +
+                    "\"logging_synchronous\": false," +
+                    "\"ipv4\": 0," +
+                    "\"subnet_mask\": 0," +
+                    "\"ipv6\": 0," +
+                    "\"prefix\": 0," +
+                    "\"description\": \"\"" +
+                    "}");
+            jsonObject.accumulate("Routers", json);
+        } catch (JSONException e) {
+
+        }
+    }
 }

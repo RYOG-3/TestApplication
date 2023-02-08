@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +46,54 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity getInstance() {
         return instance;
+    }
+
+    /**
+     * routers の null を除いたルータのArrayList を返す
+     *
+     * @return 配置したルータのリスト
+     */
+    protected static ArrayList<Router> getAvailableRouters() {
+        ArrayList<Router> availableRouters = new ArrayList<>();
+
+        for (Router router : routers) {
+            if (router != null) {
+                availableRouters.add(router);
+            }
+        }
+        return availableRouters;
+    }
+
+    /**
+     * switches の null を除いたスイッチの ArrayList を返す
+     *
+     * @return 配置したスイッチのリスト
+     */
+    protected static ArrayList<Switch> getAvailableSwitches() {
+        ArrayList<Switch> availableSwitches = new ArrayList<>();
+
+        for (Switch s : switches) {
+            if (s != null) {
+                availableSwitches.add(s);
+            }
+        }
+        return availableSwitches;
+    }
+
+    /**
+     * hosts の null を除いたホストの ArrayList を返す
+     *
+     * @return 配置したホストのリスト
+     */
+    protected static ArrayList<Host> getAvailableHost() {
+        ArrayList<Host> availableHosts = new ArrayList<>();
+
+        for (Host host : hosts) {
+            if (host != null) {
+                availableHosts.add(host);
+            }
+        }
+        return availableHosts;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -164,21 +213,29 @@ public class MainActivity extends AppCompatActivity {
                 }
                 System.out.println("設定コマンドを発行します");
                 CreateJSONData createJSONData = new CreateJSONData(context);
-                createJSONData.setData();
-                new HttpRequestor(
-                        MainActivity.this, // コンテキスト
-                        "http://10.0.2.2:10000/", // 接続先URL テスト環境ではエミュレータからローカルマシンにブリッジするIPアドレス
-                        "発行中...", // 通信中に砂時計に表示するメッセージ
-                        createJSONData.getJson(), // 送信するJSONデータ
-                        b -> {
-                            // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
-                            System.out.println(new String(b));
-                        },
-                        e -> {
-                            // 通信失敗時のコールバック処理。eはException。
-                            System.out.println(e.toString());
-                        }
-                ).execute();
+                if (createJSONData.setData()) {
+                    new HttpRequestor(
+                            MainActivity.this, // コンテキスト
+                            "http://10.0.2.2:10000/", // 接続先URL テスト環境ではエミュレータからローカルマシンにブリッジするIPアドレス
+                            "発行中...", // 通信中に砂時計に表示するメッセージ
+                            createJSONData.getJson(), // 送信するJSONデータ
+                            b -> {
+                                // 通信成功時のコールバック処理。bはレスポンスのbyte配列。
+                                System.out.println(new String(b));
+                            },
+                            e -> {
+                                // 通信失敗時のコールバック処理。eはException。
+                                System.out.println(e.toString());
+                            }
+                    ).execute();
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "エラーにより発行できませんでした";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
 
@@ -433,6 +490,7 @@ public class MainActivity extends AppCompatActivity {
                     // String enablePassword = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
                     if (intent.getBooleanExtra("Remove", false)) { // ルータの削除の処理(ラベルも消す)
                         routers.set(device.getID(), null);
+                        System.out.println(routers);
                         layout.removeView((View) device);
                         layout.removeView(device.getHostname());
                     } else {
