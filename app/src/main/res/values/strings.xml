@@ -22,7 +22,7 @@
     <string name="disable">disable</string>
     <string name="switch_line1">VLAN :</string>
     <string name="switch_line2">VLAN番号 :</string>
-    <string name="switch_line3">VLAN名前 :</string>
+    <string name="switch_line3">VLAN名 :</string>
     <string name="ipaddress">IP address :</string>
     <string name="wildcard">ワイルドカード</string>
     <string name="subnet">subnet mask :</string>
