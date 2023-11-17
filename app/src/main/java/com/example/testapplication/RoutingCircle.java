@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class RoutingCircle extends View {
     private float start_Y = 0;
 
     private int lineID = -1;
+    private int lineNum = 0; // 円の数（削除した分も含み ID で使用する）
 
     public RoutingCircle(Context context) {
         super(context);
@@ -103,8 +105,8 @@ public class RoutingCircle extends View {
                         if ((x > start_X + 10 || start_X - 10 > x) && (y > start_Y + 10 || start_Y - 10 > y)) {
                             this.path.lineTo(start_X, start_Y);
                             // 指を離したので、履歴に追加して、判定を行う
-                            this.lines.add(new RoutingDrawLine(lines.size(), this.path, this.paint));
-                            routerInCircle(this.path);
+                            List<Router> routers = routerInCircle(this.path);
+                            this.lines.add(new RoutingDrawLine(lineNum++, this.path, this.paint, routers));
                             // パスをリセットする
                             // これを忘れると、全ての線の色が変わってしまう
                         }
@@ -121,6 +123,23 @@ public class RoutingCircle extends View {
     }
 
     /**
+     * 指定した円に囲われたルータのリストを返すメソッド
+     * @return
+     */
+    public List<Router> getRouters(int targetID) {
+        List<Router> routers = null;
+
+        for (RoutingDrawLine line : this.lines) {
+            if (line.getLineID() == targetID) {
+                routers = line.getRouters();
+                return routers;
+            }
+        }
+        return routers;
+    }
+
+
+    /**
      * 削除ボタンが押されたときに円を削除するメソッド
      * 履歴の lines から対象の円を削除する
      */
@@ -132,7 +151,7 @@ public class RoutingCircle extends View {
                 break;
             }
         }
-        System.out.println("円は削除されませんでした");
+        // System.out.println("円は削除されませんでした");
         invalidate();
     }
 
@@ -149,12 +168,15 @@ public class RoutingCircle extends View {
         invalidate();
     }
 
-    // 円の中にあるルータを判定するメソッド
-    public void routerInCircle(Path path) {
+    /**
+     * 円の中にあるルータを判定し，ルータのリストを返すメソッド
+     */
+    public List<Router> routerInCircle(Path path) {
         PathMeasure pm = new PathMeasure(path, true); // Pathを測定するクラスを用意
         float split = 0f; // 指定した座標を取るための数値
         float aCoordinate[] = {0f, 0f}; // 必要な座標を取得するための配列を用意
         boolean judge[] = {false, false, false, false}; // ルータの右上右下左下左上に円の座標が存在するかを判断する
+        List<Router> routers = new ArrayList<>();
         int routingRouterNum = 0; // 対象ルータの個数
 
         System.out.println(pm.getLength());
@@ -181,6 +203,7 @@ public class RoutingCircle extends View {
             System.out.println(judge[2]);
             System.out.println(judge[3]);
             if (judge[0] && judge[1] && judge[2] && judge[3]) {
+                routers.add(router);
                 routingRouterNum++;
             }
             for (int j = 0; j <= 3; j++) {
@@ -197,6 +220,8 @@ public class RoutingCircle extends View {
         myToast.show();
         System.out.printf("囲われたルーターの数は%d個です", routingRouterNum);
         System.out.println();
+
+        return routers;
     }
 
     /**
@@ -236,11 +261,13 @@ public class RoutingCircle extends View {
         private int lineID;
         private Paint paint;
         private Path path;
+        private List<Router> routers; // 囲われたルータのリスト
 
-        RoutingDrawLine(int lineID, Path path, Paint paint) {
+        RoutingDrawLine(int lineID, Path path, Paint paint, List<Router> routers) {
             this.lineID = lineID;
             this.paint = new Paint(paint);
             this.path = new Path(path);
+            this.routers = routers;
         }
 
         int getLineID() {
@@ -250,5 +277,13 @@ public class RoutingCircle extends View {
         void draw(Canvas canvas) {
             canvas.drawPath(this.path, this.paint);
         }
+
+        void addRouter(Router router) {
+            routers.add(router);
+        }
+
+        List<Router> getRouters() { return routers; }
+
+        int getRouting_RouterNum() { return routers.size(); }
     }
 }

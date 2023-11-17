@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -10,16 +11,25 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/remove"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onDeleteButtonClick"
-            android:text="@string/remove" />
+            android:text="@string/remove"
+            android:textSize="34sp"
+            app:backgroundTint="#FF5722" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onOKButtonClick"
-            android:text="@string/ok" />
+            android:text="@string/ok"
+            android:textSize="34sp"
+            app:backgroundTint="#4CAF50" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -31,12 +41,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="@string/accessList" />
 
         <EditText
             android:id="@+id/accessListNum"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
 
@@ -44,244 +56,139 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/access_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/permission"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
             android:entries="@array/access_type" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="30dp"
             android:text="@string/ipaddress" />
 
         <EditText
             android:id="@+id/ipaddress1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/ipaddress2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/ipaddress3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/ipaddress4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="30dp"
             android:text="@string/wildcard" />
 
         <EditText
             android:id="@+id/wildcard1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/wildcard2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/wildcard3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:text="." />
 
         <EditText
             android:id="@+id/wildcard4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="25dp"
             android:inputType="number" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_plus"
+            android:onClick="onPlusButtonClick"
+            android:text="@string/plus"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            app:backgroundTint="#03A9F4" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+
+    <ListView
+        android:id="@+id/acl_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="350dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/accessList" />
-
-        <EditText
-            android:id="@+id/accessListNum2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Spinner
-            android:id="@+id/access_type2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/access_type" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ipaddress" />
-
-        <EditText
-            android:id="@+id/ipaddress1_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/ipaddress2_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/ipaddress3_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/ipaddress4_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wildcard" />
-
-        <EditText
-            android:id="@+id/wildcard1_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/wildcard2_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/wildcard3_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="." />
-
-        <EditText
-            android:id="@+id/wildcard4_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <!--
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onMinusButtonClick"
-                android:text="@string/minus"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onPlusButtonClick"
-                android:text="@string/plus"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    -->
 
 </LinearLayout>

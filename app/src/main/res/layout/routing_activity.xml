@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -10,18 +11,31 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:id="@+id/remove"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onDeleteButtonClick"
-            android:text="@string/remove" />
+            android:text="@string/remove"
+            android:textSize="34sp"
+            app:backgroundTint="#FF5722" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:onClick="onOKButtonClick"
-            android:text="@string/ok" />
+            android:text="@string/ok"
+            android:textSize="34sp"
+            app:backgroundTint="#4CAF50" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="30dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -40,13 +54,15 @@
             android:id="@+id/rip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RIP" />
+            android:text="RIP"
+            android:textSize="34dp" />
 
         <CheckBox
             android:id="@+id/ospf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OSPF" />
+            android:text="OSPF"
+            android:textSize="34dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </LinearLayout>

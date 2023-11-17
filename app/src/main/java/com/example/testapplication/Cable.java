@@ -19,8 +19,8 @@ public class Cable extends View {
     private float x2, y2; // 終点のx座標とy座標
     private int cable_ID; // ケーブルの番号
 
-    private Device device1; // ケーブルに繋がったネットワーク機器
-    private Device device2; // 始点側とか終点側とか決めていない
+    private Device device1; // ケーブルに繋がったネットワーク機器（タブレットから見て左側）
+    private Device device2; // （タブレットから見て右側）
 
     public Cable(Context context, float x1, float y1, float x2, float y2, int cable_ID, Device device1, Device device2) {
         super(context);
@@ -29,16 +29,18 @@ public class Cable extends View {
             this.y1 = y1;
             this.x2 = x2;
             this.y2 = y2;
+            this.device1 = device1;
+            this.device2 = device2;
         } else {
             this.x1 = x2;
             this.y1 = y2;
             this.x2 = x1;
             this.y2 = y1;
+            this.device1 = device2;
+            this.device2 = device1;
         }
 
         this.cable_ID = cable_ID;
-        this.device1 = device1;
-        this.device2 = device2;
     }
 
     // 描画機能を記述
@@ -121,25 +123,29 @@ public class Cable extends View {
     }
 
     /**
-     * device1のゲッターとセッター
+     * device1のゲッター
      */
     public Device getDevice1() {
         return device1;
     }
 
-    public void setDevice1(Device device1) {
-        this.device1 = device1;
-    }
-
     /**
-     * device2のゲッターとセッター
+     * device2のゲッター
      */
     public Device getDevice2() {
         return device2;
     }
 
-    public void setDevice2(Device device2) {
-        this.device2 = device2;
+    /**
+     * device のセッター
+     * @param device
+     */
+    public void setDevice(Device device) {
+        if (device.getCenterX() == this.device1.getCenterX()) {
+            this.device1 = device;
+        } else {
+            this.device2 = device;
+        }
     }
 
 }

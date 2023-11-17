@@ -1,31 +1,54 @@
 {
   "Routers": [
     {
+      "management_ip_address": "",
       "hostname": "",
-      "ip_domain_lookup": false,
+      "ip_domain_lookup": null,
       "banner_motd": "",
-      "service_password-encryption": false,
+      "service_password-encryption": null,
       "ip_domain-name": "",
       "enable_secret": "",
       "line_console_password": "",
-      "logging_synchronous": false,
-      "ipv4": 0,
-      "subnet_mask": 0,
-      "ipv6": 0,
-      "prefix": 0,
-      "description": ""
+      "logging_synchronous": null,
+      "interface": [
+        {
+          "name": "",
+          "ipv4": 0,
+          "subnet_mask": 0,
+          "ipv6": 0,
+          "prefix": 0,
+          "description": "",
+          "shutdown": false,
+          "acl": {
+            "in_outbound": null,
+            "permissions": null,
+            "ipAddress": null,
+            "wildcard": null
+          }
+        }
+      ],
+      "rip": null,
+      "ospf": null
     }
   ],
   "Switches": [
     {
       "hostname": "",
-      "ip_domain_lookup": false,
+      "ip_domain_lookup": null,
       "banner_motd": "",
-      "service_password-encryption": false,
+      "service_password-encryption": null,
       "ip_domain-name": "",
       "enable_secret": "",
       "line_console_password": "",
-      "logging_synchronous": false
+      "logging_synchronous": null,
+      "interface": [
+        {
+          "name": "",
+          "switch_port_mode": null,
+          "vlan_ID": [],
+          "vlan_name": []
+        }
+      ]
     }
   ],
   "Hosts": [

@@ -1,23 +1,8 @@
 package com.example.testapplication;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +16,12 @@ public class ACLArrow extends AppCompatImageView {
     private boolean isJudge; // インバウンド[青色]かアウトバウンド[赤色]か判定(インバウンドがtrueとする)
     private boolean isSet = false; // 設定済かどうか
     private Matrix matrix; // 矢印の向きや角度の情報を保持する
+    private Router targetRouter = null; // 設定対象のルータ
+    private int access_group_number; // インターフェースに適用するACLの番号
+    private Boolean[] permission = null; // permit か deny か
+    private List<String> ipAddresses = null;
+    private List<String> wildcards = null;
+
 
     public ACLArrow(Context context, float start_X, float start_Y, float end_X, float end_Y, int arrow_ID, Cable cable) {
         super(context);
@@ -64,6 +55,7 @@ public class ACLArrow extends AppCompatImageView {
     }
 
 
+
     public float getCenterX() {
         System.out.println("x = " + x);
         return x;
@@ -83,8 +75,6 @@ public class ACLArrow extends AppCompatImageView {
     }
 
 
-    // 履歴
-    private boolean judge = false; // タッチイベントの判定
     float target[]; // ターゲットの座標
 
 
@@ -118,6 +108,29 @@ public class ACLArrow extends AppCompatImageView {
     }
 
 
+    public static boolean checkConnectedRouter(float start_X, float start_Y, float end_X, float end_Y, Cable targetCable) {
+        double distanceFromStart, distanceFromStart2; // 始点との距離(それぞれのネットワーク機器に対しての)
+        double distanceFromEnd, distanceFromEnd2; // 終点との距離(それぞれのネットワーク機器に対しての)
+        boolean checkRouter = false;
+
+        distanceFromStart = Math.sqrt((start_X-targetCable.getStartPoint()[0]) * (start_X-targetCable.getStartPoint()[0]) + (start_Y-targetCable.getStartPoint()[1]) * (start_Y-targetCable.getStartPoint()[1]));
+        distanceFromEnd = Math.sqrt((end_X-targetCable.getStartPoint()[0]) * (end_X-targetCable.getStartPoint()[0]) + (end_Y-targetCable.getStartPoint()[1]) * (end_Y-targetCable.getStartPoint()[1]));
+        distanceFromStart2 = Math.sqrt((start_X-targetCable.getEndPoint()[0]) * (start_X-targetCable.getEndPoint()[0]) + (start_Y-targetCable.getEndPoint()[1]) * (start_Y-targetCable.getEndPoint()[1]));
+        distanceFromEnd2 = Math.sqrt((end_X-targetCable.getEndPoint()[0]) * (end_X-targetCable.getEndPoint()[0]) + (end_Y-targetCable.getEndPoint()[1]) * (end_Y-targetCable.getEndPoint()[1]));
+
+        if (distanceFromStart+distanceFromEnd < distanceFromStart2+distanceFromEnd2) { // どちらのネットワーク機器に対して始点と終点の距離の合計が短いかを判定、短い方を設定対象のネットワーク機器とする
+            if (targetCable.getDevice1().getClass() == Router.class) {
+                checkRouter = true;
+            }
+        } else {
+            if (targetCable.getDevice2().getClass() == Router.class) {
+                checkRouter = true;
+            }
+        }
+        return checkRouter;
+    }
+
+
     // インバウンドかアウトバウンドかを判定し, 対象の機器も判定する
     public void aclType(float start_X, float start_Y, float end_X, float end_Y) {
         double distanceFromStart, distanceFromStart2; // 始点との距離(それぞれのネットワーク機器に対しての)
@@ -126,7 +139,6 @@ public class ACLArrow extends AppCompatImageView {
         double degrees = Math.toDegrees(radian); // ケーブルの角度(度数)
         float default_x, default_y; // 初期の矢印の座標(ケーブルが回転するに応じて変化させる)
 
-        judge = true;
 
         distanceFromStart = Math.sqrt((start_X-cable.getStartPoint()[0]) * (start_X-cable.getStartPoint()[0]) + (start_Y-cable.getStartPoint()[1]) * (start_Y-cable.getStartPoint()[1]));
         distanceFromEnd = Math.sqrt((end_X-cable.getStartPoint()[0]) * (end_X-cable.getStartPoint()[0]) + (end_Y-cable.getStartPoint()[1]) * (end_Y-cable.getStartPoint()[1]));
@@ -135,31 +147,37 @@ public class ACLArrow extends AppCompatImageView {
 
         if (distanceFromStart+distanceFromEnd < distanceFromStart2+distanceFromEnd2) { // どちらのネットワーク機器に対して始点と終点の距離の合計が短いかを判定、短い方を設定対象のネットワーク機器とする
             target = cable.getStartPoint();
-            if (distanceFromStart > distanceFromEnd) { // 始点より終点の方が短い場合インバウンドの判定
-                // 座標と矢印の色を決定する
-                // this.arrows.add(new DrawArrow(blueArrow, target[0]-150, target[1]-100));
-                default_x = target[0] + 150;
-                default_y = target[1] + 55;
-                // x = (float)(Math.cos(radian) * 150 + target[0] + Math.cos(radian + Math.PI * 0.5) * 12); //表示位置
-                // y = (float)(Math.sin(radian) * 150 + target[1] + Math.sin(radian + Math.PI * 0.5) * 10);
-                x = (float)((default_x-target[0])*Math.cos(radian) - (default_y-target[1])*Math.sin(radian) + target[0]); // 原点以外を中心とした回転の公式から求める
-                y = (float)((default_x-target[0])*Math.sin(radian) + (default_y-target[1])*Math.cos(radian) + target[1]);
-                isJudge = true;
-            } else {
-                // 座標と矢印の色を決定する
-                // this.arrows.add(new DrawArrow(pinkArrow, target[0], target[1]));
-                default_x = target[0] + 150;
-                default_y = target[1] - 90;
-                // x = (float)(Math.cos(radian) * 150 + target[0] - Math.cos(radian + Math.PI * 0.5) * 15);
-                // y = (float)(Math.sin(radian) * 150 - 70 + target[1] + Math.sin(radian + Math.PI * 0.5) * 10);
-                x = (float)((default_x-target[0])*Math.cos(radian) - (default_y-target[1])*Math.sin(radian) + target[0]);
-                y = (float)((default_x-target[0])*Math.sin(radian) + (default_y-target[1])*Math.cos(radian) + target[1]);
-                isJudge = false;
+            if (cable.getDevice1().getClass() == Router.class) {
+                targetRouter = (Router) cable.getDevice1(); // startなので左側のルータがターゲット
+                if (distanceFromStart > distanceFromEnd) { // 始点より終点の方が短い場合インバウンドの判定
+                    // 座標と矢印の色を決定する
+                    // this.arrows.add(new DrawArrow(blueArrow, target[0]-150, target[1]-100));
+                    default_x = target[0] + 150;
+                    default_y = target[1] + 55;
+                    // x = (float)(Math.cos(radian) * 150 + target[0] + Math.cos(radian + Math.PI * 0.5) * 12); //表示位置
+                    // y = (float)(Math.sin(radian) * 150 + target[1] + Math.sin(radian + Math.PI * 0.5) * 10);
+                    x = (float)((default_x-target[0])*Math.cos(radian) - (default_y-target[1])*Math.sin(radian) + target[0]); // 原点以外を中心とした回転の公式から求める
+                    y = (float)((default_x-target[0])*Math.sin(radian) + (default_y-target[1])*Math.cos(radian) + target[1]);
+                    isJudge = true;
+                } else {
+                    // 座標と矢印の色を決定する
+                    // this.arrows.add(new DrawArrow(pinkArrow, target[0], target[1]));
+                    default_x = target[0] + 150;
+                    default_y = target[1] - 90;
+                    // x = (float)(Math.cos(radian) * 150 + target[0] - Math.cos(radian + Math.PI * 0.5) * 15);
+                    // y = (float)(Math.sin(radian) * 150 - 70 + target[1] + Math.sin(radian + Math.PI * 0.5) * 10);
+                    x = (float)((default_x-target[0])*Math.cos(radian) - (default_y-target[1])*Math.sin(radian) + target[0]);
+                    y = (float)((default_x-target[0])*Math.sin(radian) + (default_y-target[1])*Math.cos(radian) + target[1]);
+                    isJudge = false;
+                }
+                matrix.setRotate(180 + (float)degrees, x, y);
+                System.out.println("角度 = " + degrees);
             }
-            matrix.setRotate(180 + (float)degrees, x, y);
-            System.out.println("角度 = " + degrees);
         } else {
             target = cable.getEndPoint();
+            if (cable.getDevice2().getClass() == Router.class) {
+                targetRouter = (Router) cable.getDevice2(); // endなので右側のルータがターゲット
+            }
             if (distanceFromStart2 > distanceFromEnd2) { // もう一方のネットワーク機器に対しての始点と終点の距離を判定
                 // 座標と矢印の色を決定する
                 // this.arrows.add(new DrawArrow(blueArrow, target[0]-150, target[1]-100));
@@ -194,4 +212,35 @@ public class ACLArrow extends AppCompatImageView {
         return this.matrix;
     }
 
+    public Router getTargetRouter() {
+        return targetRouter;
+    }
+
+    public void setTargetRouter(Router targetRouter) {
+    this.targetRouter = targetRouter;
+    }
+
+    public void setPermission(Boolean[] permission) {
+        this.permission = permission;
+    }
+
+    public void setIpAddresses(List<String> ipAddresses) {
+        this.ipAddresses = ipAddresses;
+    }
+
+    public void setWildcards(List<String> wildcards) {
+        this.wildcards = wildcards;
+    }
+
+    public Boolean[] getPermission() {
+        return this.permission;
+    }
+
+    public List<String> getIpAddresses() {
+        return this.ipAddresses;
+    }
+
+    public List<String> getWildcards() {
+        return this.wildcards;
+    }
 }

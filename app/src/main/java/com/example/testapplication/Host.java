@@ -12,6 +12,7 @@ public class Host extends AppCompatImageView implements Device {
     private int host_ID; // ホストの番号
     private boolean isSet = false; // 設定済かどうか
     private TextView hostname;
+    private Cable cable;
 
     public Host(Context context, float x, float y, int host_ID) {
         super(context);
@@ -43,6 +44,9 @@ public class Host extends AppCompatImageView implements Device {
         this.hostname = hostname;
     }
 
+    public void setCable(Cable cable) {
+        this.cable = cable;
+    }
     public float getCenterX() {
         return x;
     }
@@ -62,5 +66,7 @@ public class Host extends AppCompatImageView implements Device {
     public TextView getHostname() {
         return hostname;
     }
+
+    public Cable getCable() { return cable; }
 
 }

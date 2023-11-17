@@ -9,50 +9,56 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * VLANのリストを管理するためのアダプタークラスをカスタマイズした継承クラス
- */
-public class ListViewAdapter extends BaseAdapter {
+public class AclListViewAdapter extends BaseAdapter {
     static class ViewHolder {
-        TextView vlanIdView;
-        TextView vlanNameView;
+        TextView permissionView;
+        TextView ipaddressView;
+        TextView wildcardView;
     }
 
     private final LayoutInflater inflater;
     private final int itemLayoutId;
-    private final List<Integer> vlanIds;
-    private final List<String> vlanNames;
+    private final List<Boolean> permissions;
+    private final List<String> aclLists_ipaddress;
+    private final List<String> aclLists_wildcard;
 
-    ListViewAdapter(Context context, int itemLayoutId, List<Integer> vlanIds, List<String> vlanNames) {
+    AclListViewAdapter(Context context, int itemLayoutId, List<Boolean> permissions, List<String> aclLists_ipaddress, List<String> aclLists_wildcard) {
         super();
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemLayoutId = itemLayoutId;
-        this.vlanIds = vlanIds;
-        this.vlanNames = vlanNames;
+        this.permissions = permissions;
+        this.aclLists_ipaddress = aclLists_ipaddress;
+        this.aclLists_wildcard = aclLists_wildcard;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        AclListViewAdapter.ViewHolder holder;
         // 最初だけ View を inflate して、それを再利用する
         if (convertView == null) {
             // activity_main.xml に list.xml を inflate して convertView とする
             convertView = inflater.inflate(itemLayoutId, parent, false);
             // ViewHolder を生成
-            holder = new ViewHolder();
-            holder.vlanIdView = convertView.findViewById(R.id.vlan_number);
-            holder.vlanNameView = convertView.findViewById(R.id.vlan_name);
+            holder = new AclListViewAdapter.ViewHolder();
+            holder.permissionView = convertView.findViewById(R.id.permission);
+            holder.ipaddressView = convertView.findViewById(R.id.ipaddress_acl);
+            holder.wildcardView = convertView.findViewById(R.id.wildcard_acl);
             convertView.setTag(holder);
         }
         // holder を使って再利用
         else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (AclListViewAdapter.ViewHolder) convertView.getTag();
         }
 
-        // holder の vlanIdView にセット
-        holder.vlanIdView.setText(Integer.toString(vlanIds.get(position)));
+        // holder の 各View にセット
+        if (permissions.get(position)) {
+            holder.permissionView.setText("Permit");
+        } else {
+            holder.permissionView.setText("Deny");
+        }
+        holder.ipaddressView.setText(aclLists_ipaddress.get(position));
         // 現在の position にあるファイル名リストを holder の textView にセット
-        holder.vlanNameView.setText(vlanNames.get(position));
+        holder.wildcardView.setText(aclLists_wildcard.get(position));
 
         return convertView;
     }
@@ -60,7 +66,7 @@ public class ListViewAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // texts 配列の要素数
-        return vlanIds.size();
+        return permissions.size();
     }
 
     @Override

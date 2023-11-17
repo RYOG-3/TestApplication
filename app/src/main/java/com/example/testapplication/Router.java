@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * カスタムビューを作ってみた
  * これでImageViewとルータのクラスをまとめることができたはず
@@ -17,6 +20,7 @@ public class Router extends AppCompatImageView implements Device {
     private float x, y; // 画像の中心座標
     private int router_ID; // ルータの番号
     private boolean isSet = false; // 設定済かどうか
+    private String management_ipAddress; // 管理用のIPアドレス（管理サーバーからネットワーク機器に送信するのに必要）
     private TextView hostname; // ルータのホスト名
     private boolean ip_domain_lookup; // ip domain-lookupが有効か無効か(有効がtrue)
     private String banner; // バナー名
@@ -25,6 +29,10 @@ public class Router extends AppCompatImageView implements Device {
     private String enable_secret; // 特権モードのパスワード
     private String password; // コンソールのパスワード
     private boolean logging; // logging synchronousが有効か無効か
+    private List<Interface> interfaces; // ルータが保持するインターフェースのリスト
+    private boolean rip; // RIP プロトコルが有効か（デフォルトでは false）
+    private boolean ospf; // OSPF プロトコルが有効か（デフォルトでは false）
+    private Cable cable; // 接続しているケーブル
 
     public Router(Context context, float x, float y, int router_ID) {
         super(context);
@@ -38,12 +46,18 @@ public class Router extends AppCompatImageView implements Device {
         hostname.setGravity(Gravity.CENTER_HORIZONTAL);
         this.setImageResource(R.drawable.router);
         this.setId(1000+router_ID);
+        this.management_ipAddress = "";
+        interfaces = new ArrayList<>();
+        rip = false;
+        ospf = false;
+        cable = null;
     }
 
     public void setID(int router_ID) {
         this.router_ID = router_ID;
     }
 
+    public void setManagement_ipAddress(String management_ipAddress) { this.management_ipAddress = management_ipAddress; }
     public void setHostname(TextView hostname) {
         this.hostname = hostname;
     }
@@ -69,7 +83,7 @@ public class Router extends AppCompatImageView implements Device {
     }
 
     /**
-     * ネットワーク機器の基本情報に関するセッターたち
+     * ネットワーク機器の基本情報やルーティングプロトコルに関するセッターたち
      */
     public void setIp_domain_lookup(boolean ip_domain_lookup) {
         this.ip_domain_lookup = ip_domain_lookup;
@@ -99,9 +113,16 @@ public class Router extends AppCompatImageView implements Device {
         this.logging = logging;
     }
 
+    public void setRIP(boolean rip) {this.rip = rip;}
+
+    public void setOSPF(boolean ospf) {this.ospf = ospf;}
+
+    public void setCable(Cable cable) {this.cable = cable;}
+
     /**
-     * ネットワーク機器の基本情報のゲッターたち
+     * ネットワーク機器の基本情報やルーティングプロトコルに関するゲッターたち
      */
+    public String getManagement_ipAddress() { return management_ipAddress; }
     public boolean getIp_domain_lookup() {
         return ip_domain_lookup;
     }
@@ -129,5 +150,19 @@ public class Router extends AppCompatImageView implements Device {
     public boolean getLogging() {
         return logging;
     }
+
+    public boolean getRIP() { return rip; }
+
+    public boolean getOSPF() { return ospf; }
+
+    public Cable getCable() {
+        return cable;
+    }
+
+    public void addInterface(Interface router_interface) {
+        interfaces.add(router_interface);
+    }
+
+    public List<Interface> getInterfaces() { return interfaces; }
 
 }

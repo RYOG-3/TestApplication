@@ -26,17 +26,20 @@
             android:entries="@array/port_name" />
 
         <RadioGroup
+            android:id="@+id/switchPortType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/access"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/access"
                 android:textSize="34sp" />
 
             <RadioButton
+                android:id="@+id/trunk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trunk"
@@ -97,8 +100,8 @@
 
     <ListView
         android:id="@+id/vlan_list"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_width="800dp"
+        android:layout_height="250dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

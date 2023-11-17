@@ -17,4 +17,9 @@ public interface Device {
     int getID();
 
     TextView getHostname();
+
+    void setCable(Cable cable);
+
+    Cable getCable();
+
 }

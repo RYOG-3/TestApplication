@@ -16,8 +16,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 非同期通信HTTPリクエスト実行クラス<br />
- * <p>[使用方法]</p>
+ * 非同期通信HTTPリクエスト実行クラス
+ * 使用方法
  * new HttpRequestor(
  * 　 this,
  * 　 "http://xxxx.xx",
@@ -32,7 +32,7 @@ import java.nio.charset.StandardCharsets;
  * 　 }
  * ).execute();
  */
-public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
+public class HttpRequester extends AsyncTask<Void, Void, byte[]> {
     private Context context = null;
     private String url = null;
     private String process_message = null;
@@ -53,7 +53,7 @@ public class HttpRequestor extends AsyncTask<Void, Void, byte[]> {
      * @param callback        正常時のコールバック関数(Consumer<byte[]>)
      * @param errorCallback   エラー時のコールバック関数(Consumer<Exception>)
      */
-    public HttpRequestor(Context context, String url, String process_message, String send_message, Consumer<byte[]> callback, Consumer<Exception> errorCallback) {
+    public HttpRequester(Context context, String url, String process_message, String send_message, Consumer<byte[]> callback, Consumer<Exception> errorCallback) {
         this.context = context;
         this.url = url;
         this.process_message = process_message;
